@@ -11,6 +11,10 @@ class Cchart extends CI_Controller {
 	}
 	public function chartsensorldr()
 	{
+		$this->load->view('viewchart/charterror');
+	}
+	public function charterror()
+	{
 		$this->load->view('viewchart/chartldr');
 	}
 		public function ambildataratatotal()

@@ -5,7 +5,7 @@
       <div class="col-lg-4">
         <div class="box" >
           <div class="box-header with-border">
-            <h3 class="box-title">Tambah Data User</h3>
+            <h3 class="box-title">Tambah Data Alat</h3>
             <div class="box-tools pull-right">
               <button type="button" class="btn btn-box-tool" data-widget="collapse" data-toggle="tooltip"
               title="Collapse">
@@ -16,7 +16,7 @@
             </div>
             <div class="box-body">
               <!-- /.box -->
-              <form class="form-horizontal" method="POST" action="<?php echo site_url('Cuser/inupdeluser') ?>" >
+              <form class="form-horizontal" method="POST" action="<?php echo site_url('Csimulasi/inupdelsimulasi') ?>" >
                 <div class="box-body">
                  <div class="form-group">
                   <label for="alamat" class="col-sm-3 control-label">ID </label>
@@ -34,21 +34,19 @@
                   </div>
                 </div>
                 <div class="form-group">
-                  <label for="alamat" class="col-sm-3 control-label">Username</label>
+                  <label for="alamat" class="col-sm-3 control-label">Watt</label>
 
                   <div class="col-sm-9">
-                    <input type="text" maxlength="30" name="username" id="username" class="form-control"  placeholder="username">
+                    <input type="text" maxlength="30" name="watt" id="watt" class="form-control"  placeholder="watt">
                   </div>
                 </div>
                 <div class="form-group">
-                  <label for="hp" class="col-sm-3 control-label" >Password</label>
+                  <label for="hp" class="col-sm-3 control-label" >Lama</label>
 
                   <div class="col-sm-9">
-                    <input type="text" maxlength="30" name="password" id="password" class="form-control"  placeholder="password">
+                    <input type="text" maxlength="30" name="lama" id="lama" class="form-control"  placeholder="lama penggunaan">
                   </div>
                 </div>
-
-
               </div>
               <!-- /.box-body -->
               <div class="box-footer">
@@ -84,10 +82,10 @@
                 <thead>
                   <tr>
                     <th> NO </th>
-                    <th> ID </th>
+                    <!-- <th> ID </th> -->
                     <th> Nama </th>
-                    <th> Username </th>
-                    <th> Password </th>
+                    <th> Watt </th>
+                    <th> Penggunaan </th>
                     <th style="width: 125px;"> Aksi</p> </th>
                   </tr>
                 </thead>
@@ -95,18 +93,21 @@
 
                   <?php 
                   $no=1;
-                  foreach ($listuser as $data): ?>
+                  foreach ($listsimulasi as $data): ?>
                     <tr>
                       <td><?php echo $no++; ?></td>
-                      <td><?php echo $data->id; ?></td>
+                      <!-- <td><?php echo $data->id; ?></td> -->
                       <td><?php echo $data->nama; ?></td>
-                      <td><?php echo $data->username; ?></td>
-                      <td><?php echo "*********"; ?></td>
+                      <td><?php echo $data->watt; ?> w</td>
+                      <td><?php echo $data->lama; ?> jam</td>
                       <td style="text-align: center;">
                         <button class="btn btn-sm btn-warning" onclick="updatedata(
                             '<?php echo $data->id; ?>',
                             '<?php echo $data->nama; ?>',
-                            '<?php echo $data->username; ?>')"><i class="glyphicon glyphicon-edit"></i></button>
+                            '<?php echo $data->watt; ?>',
+                            '<?php echo $data->lama; ?>')"><i class="glyphicon glyphicon-edit"></i></button>
+                        <button class="btn btn-sm btn-danger" onclick="deletedata(
+                            '<?php echo $data->id; ?>')"><i class="glyphicon glyphicon-trash"></i></button>
                       </td>
                     </tr>
 
@@ -129,19 +130,31 @@
   <!-- /.content -->
   <!-- /.content-wrapper -->
   <script type="text/javascript">
-    function updatedata(id,nama,username) {
+    function updatedata(id,nama,watt,lama) {
      document.getElementById("id").value = id;
      document.getElementById("nama").value = nama;
-     document.getElementById("username").value = username;
+     document.getElementById("watt").value = watt;
+     document.getElementById("lama").value = lama;
      document.getElementById("set").value = "update";
    }
+ function deletedata(a) {
+       if (confirm('yakin hapus barang?')) {
+         var form = $('<form action="<?php echo site_url('Csimulasi/inupdelsimulasi'); ?>" method="POST">' +
+          '<input type="hidden" name="id" value="' + a + '" />' +
+          '<input type="hidden" name="set" value="delete" />' +
+          '</form>');
+         $('body').append(form);
+         $(form).submit();
+       } else {
+         return false;
+       }
 
+     }
    function bersih() {
      document.getElementById("id").value = '';
      document.getElementById("nama").value = '';
-     document.getElementById("alamat").value = '';
-     document.getElementById("username").value = '';
-     document.getElementById("password").value = '';
+     document.getElementById("watt").value = '';
+     document.getElementById("lama").value = '';
      document.getElementById("set").value = "insert";
    }
  </script>
