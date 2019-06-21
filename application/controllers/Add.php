@@ -7,9 +7,15 @@ class Add extends CI_Controller {
 		$this->load->model('Madd');
 	}
 
-	public function update($string)
+	public function update()
 	{
-		list($rataatas, $ratabawah, $ratakiri, $ratakanan, $kd, $tol) = explode(":", $string);
+		$string = $this->input->get('data');
+		$rataatas = $this->input->get('rataatas');
+		$ratabawah = $this->input->get('ratabawah');
+		$ratakiri = $this->input->get('ratakiri');
+		$ratakanan = $this->input->get('ratakanan');
+		$kd = $this->input->get('kd');
+		$tol = $this->input->get('tol');
 		$errorvert=abs($rataatas-$ratabawah);
 		$errorhor=abs($ratakiri-$ratakanan);
 
@@ -20,15 +26,12 @@ class Add extends CI_Controller {
 			'ratakanan' => $ratakanan,
 			'ratabawah' => $ratabawah,
 			'kd' => $kd,
-			'tol' => $tol,	
+			'tol' =>$tol,
 			'errorvert' => $errorvert,
 			'errorhor' => $errorhor
 		);
 		$update = $this->Madd->update($data);
-	}
-	public function addlog($value='')
-	{
-		# code...
+		$insert = $this->Madd->addlog($data);
 	}
 }
 

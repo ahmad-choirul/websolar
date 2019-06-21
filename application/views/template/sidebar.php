@@ -27,8 +27,8 @@
         <ul class="sidebar-menu">
             <li class="header">Dashboard</li>
             <li>
-                <a href="<?php echo site_url('tampildua') ?>">
-                    <i class="fa fa-dashboard"></i> <span>Dashboard</span></i>
+                <a href="<?php echo site_url('datarealtime') ?>">
+                    <i class="fa fa-dashboard"></i> <span>Dashboard realtime</span></i>
                 </a>
             </li>
             <li class="treeview">
@@ -47,6 +47,8 @@
                 </a>
                 <ul class="treeview-menu">
                     <li><a href="#"><i class="fa fa-circle-o"></i> History Login</a></li>
+                    <li><a href="#"><i class="fa fa-circle-o"></i> History error vertikal</a></li>
+                    <li><a href="#"><i class="fa fa-circle-o"></i> History error horizontal</a></li>
                     <li><a href="#"><i class="fa fa-circle-o"></i> History Sudut x</a></li>
                     <li><a href="#"><i class="fa fa-circle-o"></i> History Sudut y</a></li>
                 </ul>
@@ -57,7 +59,7 @@
                 </a>
             </li>
             <li>
-                <a href="<?php echo site_url('tampilsatu') ?>">
+                <a href="<?php echo site_url('Cdatategangan') ?>">
                     <i class="fa fa-pie-chart"></i> <span>Data Tegangan</span></i>
                 </a>
             </li>
@@ -85,7 +87,7 @@
                 </a>
             </li>
             <li>
-                <a href="<?php echo site_url('tampildua') ?>">
+                <a href="<?php echo site_url('Csimulasi') ?>">
                     <i class="fa fa-envelope"></i> <span>Simulasi</span></i>
                 </a>
             </li>

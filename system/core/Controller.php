@@ -92,5 +92,14 @@ class CI_Controller {
 	{
 		return self::$instance;
 	}
-
+	public function tampil($view,$data)
+	{
+		$data['judul']= "Tampilan Pertama";
+		$this->load->view('template/head',$data);
+		$this->load->view('template/topbar');
+		$this->load->view('template/sidebar');
+		$this->load->view($view,$data);//isi view
+		$this->load->view('template/js');
+		$this->load->view('template/foot');
+	}
 }

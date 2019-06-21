@@ -27,7 +27,7 @@
             </div><!-- /.login-logo -->
             <div class="login-box-body">
                 <p class="login-box-msg">username = admin , pass = admin</p>
-                <form action="<?php echo site_url('Clogin/proses'); ?>" method="post">
+                <form action="<?php echo site_url('Clogin/proses'); ?>" method="POST">
                     <div class="form-group has-feedback">
                     <input type="text" name="username" class="form-control" placeholder="Username"/>
                         <span class="glyphicon glyphicon-user form-control-feedback"></span>

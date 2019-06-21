@@ -1,35 +1,50 @@
 <?php
- 
 $dataPoints1 = array();
 $dataPoints2 = array();
+// $dataPoints1 = $arrayerrorver;$dataPoints2 = array();
+
 $updateInterval = 5000; //in millisecond
 $initialNumberOfDataPoints = 20;
 $x = time() * 1000 - $updateInterval * $initialNumberOfDataPoints;
 $y1 = 0;
 $y2 = 0;
 // generates first set of dataPoints 
- 
-?>
+
+?> 	
 <!DOCTYPE HTML>
 <html>
 <head>
-<script>
-window.onload = function() {
- 
+	<script>
+		window.onload = function() {
+// 			
 var updateInterval = <?php echo $updateInterval ?>;
+var arraylog2 = <?php echo json_encode($arraylog); ?>;
 var dataPoints1 = <?php echo json_encode($dataPoints1, JSON_NUMERIC_CHECK); ?>;
 var dataPoints2 = <?php echo json_encode($dataPoints2, JSON_NUMERIC_CHECK); ?>;
 var yValue1 = <?php echo $y1 ?>;
 var yValue2 = <?php echo $y2 ?>;
 var xValue = <?php echo $x ?>;
- 
+
+for (var i = 0; i < arraylog2.length; i++) {
+	for (var j = 0; j < arraylog2[i].length; j++) {
+		dataPoints1.push({
+			x: arraylog2[i].waktu,
+			y: arraylog2[i].errorvert
+		});
+		dataPoints2.push({
+			x: arraylog2[i].waktu,
+			y: arraylog2[i].errorhor
+		});
+	}
+}
+
 var chart = new CanvasJS.Chart("chartContainer", {
 	zoomEnabled: true,
 	title: {
 		text: "Data Error"
 	},
 	axisX: {
-		title: "chart updates every " + updateInterval / 1000 + " secs"
+		title: "chart updates tiap " + updateInterval / 1000 + " detik"
 	},
 	axisY:{
 		suffix: " derajat",
@@ -46,29 +61,29 @@ var chart = new CanvasJS.Chart("chartContainer", {
 		itemclick : toggleDataSeries
 	},
 	data: [{ 
-			type: "line",
-			name: "Error Vertikal",
-			xValueType: "dateTime",
-			yValueFormatString: "#,### derajat",
-			xValueFormatString: "hh:mm:ss TT",
-			showInLegend: true,
-			legendText: "{name} " + yValue1 + " derajat",
-			dataPoints: dataPoints1
-		},
-		{
-			type: "line",
-			name: "Error Horizontal" ,
-			xValueType: "dateTime",
-			yValueFormatString: "#,### derajat",
-			showInLegend: true,
-			legendText: "{name} " + yValue2 + " derajat",
-			dataPoints: dataPoints2
+		type: "spline",
+		name: "Error Vertikal",
+		xValueType: "dateTime",
+		yValueFormatString: "#,### derajat",
+		xValueFormatString: "hh:mm:ss TT",
+		showInLegend: true,
+		legendText: "{name} " + yValue1 + " derajat",
+		dataPoints: dataPoints1
+	},
+	{
+		type: "spline",
+		name: "Error Horizontal" ,
+		xValueType: "dateTime",
+		yValueFormatString: "#,### derajat",
+		showInLegend: true,
+		legendText: "{name} " + yValue2 + " derajat",
+		dataPoints: dataPoints2
 	}]
 });
- 
+
 chart.render();
 setInterval(function(){updateChart()}, updateInterval);
- 
+
 function toggleDataSeries(e) {
 	if (typeof(e.dataSeries.visible) === "undefined" || e.dataSeries.visible) {
 		e.dataSeries.visible = false;
@@ -80,16 +95,16 @@ function toggleDataSeries(e) {
 }
  ////////////////////////data json ////////////////
  var datatotal = new Array();
-  function getdatatotal() {
+ function getdatatotal() {
 
-   var request = new XMLHttpRequest();
-   request.open('GET', 'ambildataratatotal', true);
-   request.onload = function () {
-    datatotal = JSON.parse(this.response);
-  }
-  request.send();
-  return datatotal;
-}
+ 	var request = new XMLHttpRequest();
+ 	request.open('GET', 'ambildataratatotal', true);
+ 	request.onload = function () {
+ 		datatotal = JSON.parse(this.response);
+ 	}
+ 	request.send();
+ 	return datatotal;
+ }
 ////////////////////////////
 
 
@@ -105,11 +120,11 @@ function updateChart() {
 
 	yValue1 = parseInt(v1, 10);
 	yValue2 = parseInt(v2, 10);
-if (typeof yValue1 === "undefined") {
-  yValue1 = 100;
-	yValue2 = 100;
-}
-    console.log(yValue2);
+	if (typeof yValue1 === "undefined") {
+		yValue1 = 100;
+		yValue2 = 100;
+	}
+	console.log(yValue2);
 
 	// pushing the new values
 	dataPoints1.push({
@@ -120,21 +135,21 @@ if (typeof yValue1 === "undefined") {
 		x: xValue,
 		y: yValue2
 	});
- if (dataPoints2.length>25) {
-  dataPoints1.shift();
-  dataPoints2.shift();
-} 
+	if (dataPoints2.length>25) {
+		dataPoints1.shift();
+		dataPoints2.shift();
+	} 
 	// updating legend text with  updated with y Value 
 	chart.options.data[0].legendText = " Error Vertikal " + yValue1 + " derajat";
 	chart.options.data[1].legendText = " Error Horizontal " + yValue2+ " derajat"; 
 	chart.render();
 }
- 
+
 }
 </script>
 </head>
 <body>
-<div id="chartContainer" style="height: 370px; width: 100%;"></div>
-<script src="https://canvasjs.com/assets/script/canvasjs.min.js"></script>
+	<div id="chartContainer" style="height: 370px; width: 100%;"></div>
+	<script src="<?php echo base_url('assets/canva/canvasjs.min.js') ?>" type="text/javascript"></script>
 </body>
 </html>    

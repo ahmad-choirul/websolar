@@ -11,11 +11,18 @@ class Cchart extends CI_Controller {
 	}
 	public function chartsensorldr()
 	{
-		$this->load->view('viewchart/charterror');
+		$data['arraylog'] = $this->Madd->getdatalog();
+		$this->load->view('viewchart/charterror',$data);
 	}
+
 	public function charterror()
 	{
-		$this->load->view('viewchart/chartldr');
+		$data['arraylog'] = $this->Madd->getdatalog();
+		$this->load->view('viewchart/chartldr',$data);
+	}
+	public function charttabelerror()
+	{
+		$this->load->view('viewchart/charttabelerror');
 	}
 		public function ambildataratatotal()
 	{	

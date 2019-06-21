@@ -28,7 +28,7 @@ class Clogin extends CI_Controller {
  
             $this->session->set_userdata($data_session);
  
-            redirect(base_url("dashboard1"));
+            redirect(base_url("datarealtime"));
  
         }else{
             echo "Username dan password salah !";
