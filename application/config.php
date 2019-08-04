@@ -17,7 +17,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 | environments.
 |
 */
-$config['base_url'] = 'http://localhost/websolar/';
+$config['base_url'] = 'http://test2.ifpi.or.id';
 
 /*
 |--------------------------------------------------------------------------

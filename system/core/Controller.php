@@ -94,7 +94,6 @@ class CI_Controller {
 	}
 	public function tampil($view,$data)
 	{
-		$data['judul']= "Tampilan Pertama";
 		$this->load->view('template/head',$data);
 		$this->load->view('template/topbar');
 		$this->load->view('template/sidebar');

@@ -86,6 +86,11 @@
                     <i class="fa fa-envelope"></i> <span>Lihat Sudut Tracker</span></i>
                 </a>
             </li>
+             <li>
+                <a href="<?php echo site_url('Chitung') ?>">
+                    <i class="fa fa-envelope"></i> <span>Hitung Manual</span></i>
+                </a>
+            </li>
             <li>
                 <a href="<?php echo site_url('Csimulasi') ?>">
                     <i class="fa fa-envelope"></i> <span>Simulasi</span></i>
