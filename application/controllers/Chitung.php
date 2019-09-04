@@ -63,7 +63,7 @@
 	   	}else{
 	   		$deltaerror = $errorsebelum-$error;
 	   	}
-	   	$arrayinput = array('error' => $error,'deltaerror' => $deltaerror,'hasil' => 100 );
+	   	$arrayinput = array('error' => $error,'deltaerror' => $deltaerror,'hasil' => $this->hitungfuzzy($error,$deltaerror) );
 	   	$this->Mhitungmanual->inputdata($arrayinput);
 	   	redirect('Chitung','refresh');
 	   }
@@ -188,7 +188,7 @@
 	        $this->statrangeE[0] = null;
 	        $this->statrangeE[1] = null;
 	        $this->index();
-	        // return $hasiloutput;
+	        return $totalkalicombine / $totaljumlahcombine;
 	    }
 	    public function cekrange($value,$stat)
 	    {
