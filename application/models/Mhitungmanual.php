@@ -13,10 +13,6 @@ class Mhitungmanual extends CI_Model {
 	}
 	public function getlasterror()
 	{
-
-		// $this->db->limit(1);
-		// $this->db->order_by('id', 'desc');
-		// $a= $this->db->get('tbl_hitungmanual')->result_array()[0]['error'];
 		$hasil='kosong';
 		$query = $this->db->query("SELECT * FROM `tbl_hitungmanual` ORDER by id desc limit 1");
 		$row = $query->row_array();
@@ -34,6 +30,31 @@ class Mhitungmanual extends CI_Model {
 	{
 		$this->db->where('id', $id);
 		$this->db->delete('tbl_hitungmanual');
+	}
+
+	public function get_all_datapid()
+	{
+		return $this->db->get('tbl_hitungmanualpid')->result();
+	}
+	public function getlasterrorpid()
+	{
+		$hasil='kosong';
+		$query = $this->db->query("SELECT * FROM `tbl_hitungmanualpid` ORDER by id desc limit 1");
+		$row = $query->row_array();
+		if (isset($row))
+		{
+			$hasil = $row['feedback'];
+		}
+		return $hasil;
+	}
+	public function inputdatapid($arrayinput)
+	{
+		$this->db->insert('tbl_hitungmanualpid', $arrayinput);
+	}
+	public function hapusdatapid($id)
+	{
+		$this->db->where('id', $id);
+		$this->db->delete('tbl_hitungmanualpid');
 	}
 }
 

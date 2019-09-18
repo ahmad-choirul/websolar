@@ -88,7 +88,12 @@
             </li>
              <li>
                 <a href="<?php echo site_url('Chitung') ?>">
-                    <i class="fa fa-envelope"></i> <span>Hitung Manual</span></i>
+                    <i class="fa fa-envelope"></i> <span>Hitung Manual Fuzzy</span></i>
+                </a>
+            </li>
+            <li>
+                <a href="<?php echo site_url('Chitungpid') ?>">
+                    <i class="fa fa-envelope"></i> <span>Hitung Manual PID</span></i>
                 </a>
             </li>
             <li>
