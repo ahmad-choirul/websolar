@@ -37,7 +37,19 @@ public function getdatalog()
   $query = "SELECT * FROM `tabellogv2` ORDER BY `tabellogv2`.`id` DESC LIMIT 200";
   $hasil= $this->db->query($query)->result_array(); 
   return array_reverse($hasil);
-} 
+}
+public function getdatapergerakantracker()
+{
+  $query = "SELECT * FROM `tabellogposisi` WHERE waktu >= NOW() - INTERVAL 1 day ORDER BY `tabellogposisi`.`id` desc LIMIT 300";
+  $hasil= $this->db->query($query)->result_array(); 
+  return array_reverse($hasil);
+}
+public function getdatapergerakantrackerjson()
+{
+  $query = "SELECT * FROM `tabellogposisi` WHERE waktu >= NOW() - INTERVAL 1 day ORDER BY `tabellogposisi`.`id` desc LIMIT 1";
+  $hasil= $this->db->query($query)->row(); 
+  return json_encode($hasil);
+}
 }
 
 /* End of file Madd.php */

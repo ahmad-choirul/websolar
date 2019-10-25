@@ -20,12 +20,13 @@ class Chitungpid extends CI_Controller {
 		$data['feedback'] = $this->input->post('feedback', TRUE);
 		$data['listtotal'] = $this->Mhitungmanual->get_all_datapid();
 		$data['hasiloutput'] = $this->hasiloutput;
+		$data['setpoint'] = $this->setpoint;
 		$this->tampil('view_hitungpid',$data);
 	}
 	public function inputerror()
 	{
 		$feedback = $this->input->post('feedback');
-		$errorsebelum = $this->setpoint-$feedback;
+		$errorsebelum = $this->Mhitungmanual->getlasterrorpid($this->setpoint);
 		$arrayinput = array('feedback' => $feedback,'errorsebelum' => $errorsebelum,'hasil' => $this->hitungpid($feedback,$errorsebelum) );
 		$this->Mhitungmanual->inputdatapid($arrayinput);
 		redirect('Chitungpid','refresh');
@@ -38,6 +39,14 @@ class Chitungpid extends CI_Controller {
 	public function hitungpid($feedback,$errorsebelum)
 	{
 		$error = $this->setpoint-$feedback;
+		$this->hasiloutput.=("ts = ". $this->ts);
+		$this->hasiloutput.=("\n");
+		$this->hasiloutput.=("kp = ". $this->kp);
+		$this->hasiloutput.=("\n");
+		$this->hasiloutput.=("Ti = ". $this->Ti);
+		$this->hasiloutput.=("\n");
+		$this->hasiloutput.=("Td = ". $this->Td);
+		$this->hasiloutput.=("\n");
 		$this->hasiloutput.=("setpoint = ". $this->setpoint);
 		$this->hasiloutput.=("\n");
 		$this->hasiloutput.=("feedback = ". $feedback);
@@ -78,7 +87,7 @@ class Chitungpid extends CI_Controller {
 		$this->hasiloutput.=("\n");
 		$this->hasiloutput.=("outP = Kp*error;");
 		$this->hasiloutput.=("\n");
-		$this->hasiloutput.=('outP = ('.$this->kp.' * '.$error);
+		$this->hasiloutput.=('outP = ('.$this->kp.' * '.$error.')');
 		$this->hasiloutput.=("\n");
 		$outP =  $this->kp * $error;
 		$this->hasiloutput.=("outP = ". $outP);
@@ -114,8 +123,10 @@ class Chitungpid extends CI_Controller {
 		$outPID = $outP + $outI+$outD;
 		$this->hasiloutput.=("outPID = ". $outPID);
 		$this->hasiloutput.=("\n");
+		$presentase = ($outPID/729) *100; 
+		$this->hasiloutput.=("outPID presentase = ". $presentase." %");
+		$this->hasiloutput.=("\n");
 		$this->index();
-
 		return $outPID;
 	}
 }

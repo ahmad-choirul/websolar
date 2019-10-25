@@ -8,27 +8,18 @@
                 <img src="<?php echo base_url('assets/adminlte/dist/img/user2-160x160.jpg') ?>" class="img-circle" alt="User Image" />
             </div>
             <div class="pull-left info">
-                <p>Nama User</p>
-
-                <a href="#"><i class="fa fa-circle text-success"></i> Online</a>
+                <p>Welcome</p>
+                <i>Admin</i>
             </div>
         </div>
-        <!-- search form -->
-        <form action="#" method="get" class="sidebar-form">
-            <div class="input-group">
-                <input type="text" name="q" class="form-control" placeholder="Search..."/>
-                <span class="input-group-btn">
-                    <button type='submit' name='seach' id='search-btn' class="btn btn-flat"><i class="fa fa-search"></i></button>
-                </span>
-            </div>
-        </form>
+
         <!-- /.search form -->
         <!-- sidebar menu: : style can be found in sidebar.less -->
         <ul class="sidebar-menu">
-            <li class="header">Dashboard</li>
+            <li class="header"></li>
             <li>
                 <a href="<?php echo site_url('datarealtime') ?>">
-                    <i class="fa fa-dashboard"></i> <span>Dashboard realtime</span></i>
+                    <i class="fa fa-dashboard"></i> <span>Beranda</span></i>
                 </a>
             </li>
             <li class="treeview">
@@ -38,6 +29,7 @@
                 </a>
                 <ul class="treeview-menu">
                     <li><a href="<?php echo site_url('Cuser') ?>"><i class="fa fa-circle-o"></i> Tambah User</a></li>
+                    <li><a href="#"><i class="fa fa-circle-o"></i> History Login</a></li>
                 </ul>
             </li>
             <li class="treeview">
@@ -46,22 +38,9 @@
                     <i class="fa fa-angle-left pull-right"></i>
                 </a>
                 <ul class="treeview-menu">
-                    <li><a href="#"><i class="fa fa-circle-o"></i> History Login</a></li>
-                    <li><a href="#"><i class="fa fa-circle-o"></i> History error vertikal</a></li>
-                    <li><a href="#"><i class="fa fa-circle-o"></i> History error horizontal</a></li>
                     <li><a href="#"><i class="fa fa-circle-o"></i> History Sudut x</a></li>
                     <li><a href="#"><i class="fa fa-circle-o"></i> History Sudut y</a></li>
                 </ul>
-            </li>
-            <li>
-                <a href="<?php echo site_url('Dashboard2') ?>">
-                    <i class="fa fa-calendar"></i> <span>Data Arus</span></i>
-                </a>
-            </li>
-            <li>
-                <a href="<?php echo site_url('Cdatategangan') ?>">
-                    <i class="fa fa-pie-chart"></i> <span>Data Tegangan</span></i>
-                </a>
             </li>
 
             <li class="treeview">
@@ -70,31 +49,33 @@
                     <i class="fa fa-angle-left pull-right"></i>
                 </a>
                 <ul class="treeview-menu">
-                    <li><a href="#"><i class="fa fa-circle-o"></i> Grafik Arus</a></li>
-                    <li><a href="#"><i class="fa fa-circle-o"></i> Grafik Tegangan</a></li>
                     <li><a href="#"><i class="fa fa-circle-o"></i> Grafik Sudut x</a></li>
                     <li><a href="#"><i class="fa fa-circle-o"></i> Grafik Sudut y</a></li>
                 </ul>
             </li>
-            <li>
-                <a href="<?php echo site_url('tampildua') ?>">
-                    <i class="fa fa-envelope"></i> <span>Lihat Sudut Aktuator</span></i>
+            <li class="treeview">
+                <a href="#">
+                    <i class="fa fa-edit"></i> <span>Lihat Sudut</span>
+                    <i class="fa fa-angle-left pull-right"></i>
                 </a>
+                <ul class="treeview-menu">
+                  
+                    <li><a href="#">  <i class="fa fa-envelope"></i> <span>Lihat Sudut Aktuator</span></i></a></li>
+                    <li><a href="#">  <i class="fa fa-envelope"></i> <span>Lihat Sudut Tracker</span></i></a></li>
+               
+                </ul>
             </li>
-            <li>
-                <a href="<?php echo site_url('tampildua') ?>">
-                    <i class="fa fa-envelope"></i> <span>Lihat Sudut Tracker</span></i>
+
+             <li class="treeview">
+                <a href="#">
+                    <i class="fa fa-edit"></i> <span>Hitung Manual</span>
+                    <i class="fa fa-angle-left pull-right"></i>
                 </a>
-            </li>
-             <li>
-                <a href="<?php echo site_url('Chitung') ?>">
-                    <i class="fa fa-envelope"></i> <span>Hitung Manual Fuzzy</span></i>
-                </a>
-            </li>
-            <li>
-                <a href="<?php echo site_url('Chitungpid') ?>">
-                    <i class="fa fa-envelope"></i> <span>Hitung Manual PID</span></i>
-                </a>
+                <ul class="treeview-menu">
+                  
+                    <li><a href="<?php echo site_url('Chitung') ?>">  <i class="fa fa-envelope"></i> <span>Hitung Manual Fuzzy</span></i></a></li>
+                    <li><a href="<?php echo site_url('Chitungpid') ?>">  <i class="fa fa-envelope"></i> <span>Hitung Manual PID</span></i></a></li>
+                </ul>
             </li>
             <li>
                 <a href="<?php echo site_url('Csimulasi') ?>">

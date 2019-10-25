@@ -36,14 +36,14 @@ class Mhitungmanual extends CI_Model {
 	{
 		return $this->db->get('tbl_hitungmanualpid')->result();
 	}
-	public function getlasterrorpid()
+	public function getlasterrorpid($setpoint)
 	{
-		$hasil='kosong';
+		$hasil=0;
 		$query = $this->db->query("SELECT * FROM `tbl_hitungmanualpid` ORDER by id desc limit 1");
 		$row = $query->row_array();
 		if (isset($row))
 		{
-			$hasil = $row['feedback'];
+			$hasil = $setpoint-$row['feedback'];
 		}
 		return $hasil;
 	}

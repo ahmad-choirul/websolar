@@ -54,7 +54,7 @@
 			<div class="box-header with-border">
 				<i class="fa fa-text-width"></i>
 
-				<h3 class="box-title">Description Horizontal</h3>
+				<h3 class="box-title">setpoint = <?php echo $setpoint; ?></h3>
 			</div>
 			<!-- /.box-header -->
 			<!-- Main content -->

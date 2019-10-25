@@ -12,34 +12,34 @@
 
 	    public $nba = -125; //batas atas negatif big
 	    public $nbb = -1024; //batas bawah negatif big
-	    public $nma = -10; //batas atas negatif medium
+	    public $nma = -50; //batas atas negatif medium
 	    public $nmb = -275; //batas bawah negatif medium
-	    public $nsa = 0; //batas atas negatif small
+	    public $nsa = 10; //batas atas negatif small
 	    public $nsb = -125; //batas bawah negatif small
-	    public $za = 10; //batas atas zero
-	    public $zb = -10; //batas bawah zero
+	    public $za = 50; //batas atas zero
+	    public $zb = -50; //batas bawah zero
 	   public $psa = 125; //batas atas positif small
-	   public $psb = 0; //batas bawah positif small
+	   public $psb = 10; //batas bawah positif small
 	   public $pma = 275; //batas atas positif medium
-	   public $pmb = 10; //batas bawah positif medium
+	   public $pmb = 50; //batas bawah positif medium
 	   public $pba = 1024; //batas atas positif big
 	   public $pbb = 125; //batas bawah positif big
 	   public $domnb = -275;
 	   public $domnm = -125;
-	   public $domns = -10;
+	   public $domns = -50;
 	   public $domz = 0;
-	   public $domps = 10;
+	   public $domps = 50;
 	   public $dompm = 125;
 	   public $dompb = 275;
-	       public $statrangeE = array();
-    public $statrangeDE  = array();
+	   public $statrangeE = array();
+	   public $statrangeDE  = array();
 
-    public $alfae  = array();
-    public $alfade = array();
+	   public $alfae  = array();
+	   public $alfade = array();
 
-    public $combine  = array();
+	   public $combine  = array();
 
-    public $range  = array();
+	   public $range  = array();
 
 	   public function __construct()
 	   {
@@ -63,8 +63,13 @@
 	   	}else{
 	   		$deltaerror = $errorsebelum-$error;
 	   	}
-	   	$arrayinput = array('error' => $error,'deltaerror' => $deltaerror,'hasil' => $this->hitungfuzzy($error,$deltaerror) );
+	   	if ($error>=-10&&$error<=10) {
+	   		$arrayinput = array('error' => $error,'deltaerror' => $deltaerror,'hasil' => '0');
+	   	}else{
+	   		$arrayinput = array('error' => $error,'deltaerror' => $deltaerror,'hasil' => $this->hitungfuzzy($error,$deltaerror));
+	   	}	 
 	   	$this->Mhitungmanual->inputdata($arrayinput);
+
 	   	redirect('Chitung','refresh');
 	   }
 	   public function hapusdata($id)
@@ -76,7 +81,7 @@
 	   {
 	   	$this->statrangeE=$this->cekrange($error,$this->statrangeE);
 	   	$hasiloutput = "";
-	   	if ($this->statrangeE[1] != null) {
+	   	if ($this->statrangeE[1] != null) { //pengecekan apakah errornya masuk di satu atau dua himpunan (misal diatas 125 pasti Negatif Medium) yagn ini dua hipunan
 	   		$this->hasiloutput.=("CE = ". $error);
 	   		$this->hasiloutput.=("\n");
 	   		$this->hasiloutput.=($this->statrangeE[0] ." = ");
@@ -138,7 +143,7 @@
 	            	$this->hasiloutput.=("\n");
 
 	            } else {//e=2 de=1
-	            	System.out.println("e=2 dan de=1");
+	            	// System.out.println("e=2 dan de=1");
 	            	for ($j = 0; $j < 2; $j++) {
 	            		$this->combine[$j] = max($this->alfae[$j], $this->alfade[0]);
 	            		$this->hasiloutput.=("\n");
@@ -150,8 +155,8 @@
 	            	}
 	            	$this->hasiloutput.=("==========================");
 	            	$this->hasiloutput.=("\n");
-
 	            }
+	           
 	        } else {//e=1 de=2
 	            if ($deltaerror == 0) {//awal perhitungan saat de =0 
 	            	$totalkalicombine = 0;
@@ -170,7 +175,12 @@
 	            }
 	        }
 	        $totaljumlahcombine = 0;
+	        $this->hasiloutput.=("combine lihat");
+
 	        for ($i = 0; $i < sizeof($this->combine); $i++) {
+	        $this->hasiloutput.=($this->combine[$i]);
+	        $this->hasiloutput.=("\n");
+
 	        	$totaljumlahcombine += $this->combine[$i];
 	        }
 	        $this->hasiloutput.=("$totalkalicombine");
@@ -188,7 +198,11 @@
 	        $this->statrangeE[0] = null;
 	        $this->statrangeE[1] = null;
 	        $this->index();
-	        return $totalkalicombine / $totaljumlahcombine;
+	        $hasiltotal =$totalkalicombine / $totaljumlahcombine;
+	        if ($error<0) {
+	        	$hasiltotal*-1;
+	        }
+	        return $hasiltotal;
 	    }
 	    public function cekrange($value,$stat)
 	    {

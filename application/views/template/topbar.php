@@ -4,7 +4,7 @@
     <div class="wrapper">
 
         <header class="main-header">
-            <a href="#" class="logo"><b>Sistem </b>Kontrol Posisi</a>
+            <a href="#" class="logo"><i>Solar Tracker</i> <b>System </b></a>
             <!-- Header Navbar: style can be found in header.less -->
             <nav class="navbar navbar-static-top" role="navigation">
                 <!-- Sidebar toggle button-->
@@ -20,15 +20,14 @@
                         <li class="dropdown user user-menu">
                             <a href="#" class="dropdown-toggle" data-toggle="dropdown">
                                 <img src="<?php echo base_url('assets/adminlte/dist/img/user2-160x160.jpg') ?>" class="user-image" alt="User Image"/>
-                                <span class="hidden-xs">Nama User</span>
+                                <span class="hidden-xs">Admin</span>
                             </a>
                             <ul class="dropdown-menu">
                                 <!-- User image -->
                                 <li class="user-header">
                                     <img src="<?php echo base_url('assets/adminlte/dist/img/user2-160x160.jpg') ?>" class="img-circle" alt="User Image" />
                                     <p>
-                                        nama user / jabatan nya
-                                        <small>keterangan tambahan</small>
+                                        -Admin-
                                     </p>
                                 </li>
                                 <!-- Menu Footer-->
