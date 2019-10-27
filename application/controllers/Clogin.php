@@ -12,24 +12,32 @@ class Clogin extends CI_Controller {
         $this->load->view('loginv2');
     }
     function proses() {
-                $username = $this->input->post('username');
+        $username = $this->input->post('username');
         $password = $this->input->post('password');
         $where = array(
             'username' => $username,
             'password' => md5($password)
-            );
+        );
         $cek = $this->Mlogin->cek_login("admin",$where)->num_rows();
         if($cek > 0){
- 
+            $getdata = $this->Mlogin->cek_login("admin",$where)->result_array()[0];
             $data_session = array(
-                'nama' => $username,
+                'nama' => $getdata['username'],
+                'id_user' => $getdata['id'],
                 'status' => "login"
-                );
- 
+            );
+
+            $this->load->library('user_agent');
+            $data['id_user'] =$getdata['id'];
+            $data['browser'] = $this->agent->browser();
+            $data['os'] = $this->agent->platform();
+            $data['ip_address'] = $this->input->ip_address();
+            $this->Mlogin->insertdatalogin($data);
+
             $this->session->set_userdata($data_session);
- 
+
             redirect(base_url("datarealtime"));
- 
+
         }else{
             echo "Username dan password salah !";
         }

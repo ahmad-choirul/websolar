@@ -19,8 +19,8 @@ class Madd extends CI_Model {
 }
 public function ambiljsontotal(){
   $query = $this->db->select('*')->from('tabelupdate')->order_by("id","desc")->limit(1)->get();
-  $hasil = $query->row();
-  return json_encode($hasil);
+  $datarealtime = $query->row();
+  return json_encode($datarealtime);
 }
 public function getarrayerrorver()
 {
@@ -40,13 +40,13 @@ public function getdatalog()
 }
 public function getdatapergerakantracker()
 {
-  $query = "SELECT * FROM `tabellogposisi` WHERE waktu >= NOW() - INTERVAL 1 day ORDER BY `tabellogposisi`.`id` desc LIMIT 300";
+  $query = "SELECT * FROM `tabellogposisi` WHERE date(waktu) = (SELECT date(waktu) from tabellogposisi ORDER BY waktu desc limit 1)";
   $hasil= $this->db->query($query)->result_array(); 
   return array_reverse($hasil);
 }
 public function getdatapergerakantrackerjson()
 {
-  $query = "SELECT * FROM `tabellogposisi` WHERE waktu >= NOW() - INTERVAL 1 day ORDER BY `tabellogposisi`.`id` desc LIMIT 1";
+  $query = "SELECT * FROM `tabellogposisi` WHERE waktu >= NOW() - INTERVAL 3 day ORDER BY `tabellogposisi`.`id` desc LIMIT 1";
   $hasil= $this->db->query($query)->row(); 
   return json_encode($hasil);
 }

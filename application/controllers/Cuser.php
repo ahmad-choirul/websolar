@@ -7,6 +7,7 @@ class Cuser extends CI_Controller {
 		parent::__construct();
 		
 		$this->load->model('Muser');
+		$this->load->model('Mlogin');
 	}
 
 	public function index()
@@ -17,6 +18,17 @@ class Cuser extends CI_Controller {
 		$this->load->view('template/topbar');
 		$this->load->view('template/sidebar');
 		$this->load->view('daftar_user',$data);
+		$this->load->view('template/js');
+		$this->load->view('template/foot');
+	}
+	public function history_login()
+	{
+		$data['judul']= "history login";
+		$data['daftarlogin'] = $this->Mlogin->get_historylogin();
+		$this->load->view('template/head',$data);
+		$this->load->view('template/topbar');
+		$this->load->view('template/sidebar');
+		$this->load->view('history_login',$data);
 		$this->load->view('template/js');
 		$this->load->view('template/foot');
 	}

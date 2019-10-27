@@ -29,7 +29,7 @@
                 </a>
                 <ul class="treeview-menu">
                     <li><a href="<?php echo site_url('Cuser') ?>"><i class="fa fa-circle-o"></i> Tambah User</a></li>
-                    <li><a href="#"><i class="fa fa-circle-o"></i> History Login</a></li>
+                    <li><a href="<?php echo site_url('Cuser/history_login') ?>"><i class="fa fa-circle-o"></i> History Login</a></li>
                 </ul>
             </li>
             <li class="treeview">
@@ -60,7 +60,7 @@
                 </a>
                 <ul class="treeview-menu">
                   
-                    <li><a href="#">  <i class="fa fa-envelope"></i> <span>Lihat Sudut Aktuator</span></i></a></li>
+                    <li><a href="<?php echo site_url('sudutaktuator') ?>">  <i class="fa fa-envelope"></i> <span>Lihat Sudut Aktuator</span></i></a></li>
                     <li><a href="#">  <i class="fa fa-envelope"></i> <span>Lihat Sudut Tracker</span></i></a></li>
                
                 </ul>

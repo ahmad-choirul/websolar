@@ -7,18 +7,28 @@ class Cviewchart extends CI_Controller {
 		parent::__construct();
 	}
 
-	public function realtime()
-	{
+	public function realtime(){
 		$data['arraylog'] = $this->Madd->getdatalog();
 		$data['judul']= "Tampilan Pertama";
 		$this->tampil('chart_realtime',$data);
 	}
-	public function historierror()
-	{
+	public function historierror(){
 		$data['judul']= "data log error";
 		$data['arraylog'] = $this->Madd->getdatalog();
 		$this->tampil('tabel_histori',$data);
 	}
+
+	
+	public function lihatsudutaktuator(){
+		// $data['arraylog'] = $this->Madd->getdatalog();
+		$data['judul']= "Tampilan Pertama";
+		$this->tampil('chart_aktuator',$data);
+	}
+	public function chartpergerakantracker(){
+		$data['arraylog'] = $this->Madd->getdatapergerakantracker();
+		$this->load->view('viewchart/charttracker',$data);
+	}
+
 }
 
 /* End of file Cviewchart.php */

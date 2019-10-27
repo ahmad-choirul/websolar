@@ -3,6 +3,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 
 $route['default_controller'] = 'Clogin';
 $route['datarealtime'] = 'Cviewchart/realtime';
+$route['sudutaktuator'] = 'Cviewchart/lihatsudutaktuator';
 $route['histori'] = 'Cviewchart/historierror';
 $route['dashboardkedua'] = 'Dashboard2';
 $route['tampilsatu'] = 'Ctampilsatu';

@@ -1,21 +1,27 @@
 <?php
 
-$dataPoints1 = array();
-$dataPoints2 = array();
-$dataPoints3 = array();
-$dataPoints4 = array();
 $updateInterval = 5000; //in millisecond
 $initialNumberOfDataPoints = 50;
 $x = time() * 1000 - $updateInterval * $initialNumberOfDataPoints;
-for ($i=0; $i <count($arraylog) ; $i++) { 
-  $poin=array("x"=>$arraylog[$i]['waktu'],"y"=>$arraylog[$i]['rataatas']);
-  array_push($dataPoints1, $poin);
-  $poin2=array("x"=>$arraylog[$i]['waktu'],"y"=>$arraylog[$i]['ratabawah']);
-  array_push($dataPoints2, $poin2);
-  $poin3=array("x"=>$arraylog[$i]['waktu'],"y"=>$arraylog[$i]['ratakanan']);
-  array_push($dataPoints3, $poin3);
-  $poin4=array("x"=>$arraylog[$i]['waktu'],"y"=>$arraylog[$i]['ratakiri']);
-  array_push($dataPoints4, $poin4);
+// for ($i=0; $i <count($arraylog) ; $i++) { 
+//   $poin=array("x"=>$arraylog[$i]['waktu'],"y"=>$arraylog[$i]['rataatas']);
+//   array_push($dataPoints1, $poin);
+//   $poin2=array("x"=>$arraylog[$i]['waktu'],"y"=>$arraylog[$i]['ratabawah']);
+//   array_push($dataPoints2, $poin2);
+//   $poin3=array("x"=>$arraylog[$i]['waktu'],"y"=>$arraylog[$i]['ratakanan']);
+//   array_push($dataPoints3, $poin3);
+//   $poin4=array("x"=>$arraylog[$i]['waktu'],"y"=>$arraylog[$i]['ratakiri']);
+//   array_push($dataPoints4, $poin4);
+// }
+$dataPointsphp = array();
+foreach ($arraylog as $key => $value) {
+  $temp = array();
+  array_push($temp, $value['rataatas']);
+  array_push($temp,  $value['ratabawah']);
+    array_push($temp,$value['ratakanan']);
+  array_push($temp, $value['ratakiri']);
+  array_push($temp, $value['waktu']);
+  array_push($dataPointsphp, $temp);
 }
 // generates first set of dataPoints 
 
@@ -36,11 +42,33 @@ for ($i=0; $i <count($arraylog) ; $i++) {
      var v4=datajson['ratakiri'];
 
      var updateInterval = <?php echo $updateInterval ?>;
-     var dataPoints1 = <?php echo json_encode($dataPoints1, JSON_NUMERIC_CHECK); ?>;
-     var dataPoints2 = <?php echo json_encode($dataPoints2, JSON_NUMERIC_CHECK); ?>;
-     var dataPoints3 = <?php echo json_encode($dataPoints3, JSON_NUMERIC_CHECK); ?>;
-     var dataPoints4 = <?php echo json_encode($dataPoints4, JSON_NUMERIC_CHECK); ?>;
+     var arrayjs = <?php echo json_encode($dataPointsphp); ?>;
+     console.table(arrayjs);
+var dataPoints1 = [];
+var dataPoints2 = [];
+var dataPoints3 = [];
+var dataPoints4 = [];
 
+  for (var j = 0; j < 300; j++) {
+    dataPoint1.push({
+      x: arrayjs[j][4],
+      // x: (Math.random()),
+      y: parseFloat(arrayjs[j][0])
+    });
+    dataPoints2.push({
+      x: arrayjs[j][4],
+      y: parseFloat(arrayjs[j][1])
+    });
+      dataPoints3.push({
+      x: arrayjs[j][4],
+      y: parseFloat(arrayjs[j][2])
+    });
+        dataPoints4.push({
+      x: arrayjs[j][4],
+      y: parseFloat(arrayjs[j][3])
+    });
+    as++;
+  }
      var yValue1 = parseInt(v1, 10);
      var yValue2 = parseInt(v2, 10);
      var yValue3 =parseInt(v3, 10);

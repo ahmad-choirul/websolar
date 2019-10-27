@@ -20,6 +20,15 @@ class Mlogin extends CI_Model {
         $this->db->where("u_id", $kode);
         return $this->db->get("user");
     }
+    public function insertdatalogin($data)
+    {
+        $this->db->insert('history_login', $data);
+    }
+    public function get_historylogin()
+    {
+        $this->db->join('admin', 'admin.id = history_login.id_user');
+        return $this->db->get('history_login')->result();
+    }
     function getLoginData($usr, $psw) {
         $u = mysql_real_escape_string($usr);
         $p = md5(mysql_real_escape_string($psw));

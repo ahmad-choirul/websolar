@@ -8,11 +8,7 @@ class Cchart extends CI_Controller {
 	}
 	public function index(){
 	}
-	public function chartpergerakantracker(){
-		$data['arraylog'] = $this->Madd->getdatapergerakantracker();
-		$this->load->view('viewchart/charttracker',$data);
-	}
-	public function ambildatatracker(){	
+		public function ambildatatracker(){	
 		$angka=$this->Madd->getdatapergerakantrackerjson();
 		echo $angka;
 		return $angka;
@@ -29,9 +25,9 @@ class Cchart extends CI_Controller {
 		$this->load->view('viewchart/charttabelerror');
 	}
 	public function ambildataratatotal(){	
-		$angka=$this->Madd->ambiljsontotal();
-		echo $angka;
-		return $angka;
+		$datarealtime=$this->Madd->ambiljsontotal();
+		echo $datarealtime;
+		return $datarealtime;
 	}
 
 }

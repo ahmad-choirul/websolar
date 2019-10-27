@@ -98,7 +98,7 @@ function toggleDataSeries(e) {
  function getdatatotal() {
 
  	var request = new XMLHttpRequest();
- 	request.open('GET', 'ambildataratatotal', true);
+ 	request.open('GET', 'Cchart/ambildataratatotal', true);
  	request.onload = function () {
  		datatotal = JSON.parse(this.response);
  	}
