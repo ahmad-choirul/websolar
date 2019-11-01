@@ -1,12 +1,12 @@
 <?php if ( ! defined('BASEPATH')) exit('No direct script access allowed');
 
 class Chitungpid extends CI_Controller {
-	public $ts = 0.05;
-	public $kp = 0.9;
-	public $Ti = 0.3;
-	public $Td = 1;
-	public $hasiloutput="";
-	public	$setpoint = 90;
+	private $ts = 0.05;
+	private $kp = 0.9;
+	private $Ti = 0.3;
+	private $Td = 1;
+	private $hasiloutput="";
+	private	$setpoint = 90;
 
 	public function __construct()
 	{
@@ -36,7 +36,7 @@ class Chitungpid extends CI_Controller {
 		$this->Mhitungmanual->hapusdatapid($id);
 		redirect('Chitungpid','refresh');
 	}
-	public function hitungpid($feedback,$errorsebelum)
+	private function hitungpid($feedback,$errorsebelum)
 	{
 		$error = $this->setpoint-$feedback;
 		$this->hasiloutput.=("ts = ". $this->ts);

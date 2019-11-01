@@ -66,10 +66,10 @@ CREATE TABLE `tabellog` (
 -- --------------------------------------------------------
 
 --
--- Struktur dari tabel `tabellogv2`
+-- Struktur dari tabel `tabellogtracker`
 --
 
-CREATE TABLE `tabellogv2` (
+CREATE TABLE `tabellogtracker` (
   `id` int(11) NOT NULL,
   `rataatas` int(11) NOT NULL,
   `ratabawah` int(11) NOT NULL,
@@ -83,10 +83,10 @@ CREATE TABLE `tabellogv2` (
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
--- Dumping data untuk tabel `tabellogv2`
+-- Dumping data untuk tabel `tabellogtracker`
 --
 
-INSERT INTO `tabellogv2` (`id`, `rataatas`, `ratabawah`, `ratakiri`, `ratakanan`, `errorvert`, `errorhor`, `kd`, `tol`, `waktu`) VALUES
+INSERT INTO `tabellogtracker` (`id`, `rataatas`, `ratabawah`, `ratakiri`, `ratakanan`, `errorvert`, `errorhor`, `kd`, `tol`, `waktu`) VALUES
 (1, 612, 430, 420, 514, 182, 94, 77, 35, '2019-06-10 15:22:03'),
 (2, 465, 713, 406, 60, 248, 346, 70, 21, '2019-06-10 15:22:03'),
 (3, 799, 98, 676, 823, 701, 147, 50, 2, '2019-06-10 15:22:03'),
@@ -241,9 +241,9 @@ ALTER TABLE `tabellog`
   ADD PRIMARY KEY (`id`);
 
 --
--- Indeks untuk tabel `tabellogv2`
+-- Indeks untuk tabel `tabellogtracker`
 --
-ALTER TABLE `tabellogv2`
+ALTER TABLE `tabellogtracker`
   ADD PRIMARY KEY (`id`);
 
 --
@@ -281,9 +281,9 @@ ALTER TABLE `tabellog`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
 
 --
--- AUTO_INCREMENT untuk tabel `tabellogv2`
+-- AUTO_INCREMENT untuk tabel `tabellogtracker`
 --
-ALTER TABLE `tabellogv2`
+ALTER TABLE `tabellogtracker`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=71;
 
 --

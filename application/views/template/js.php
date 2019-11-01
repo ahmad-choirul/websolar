@@ -37,3 +37,17 @@
 
 <!-- AdminLTE-2.0.5 for demo purposes -->
 <script src="<?php echo base_url('assets/adminlte/dist/js/demo.js') ?>" type="text/javascript"></script>
+<script src="<?php echo base_url('assets/adminlte/bower_components/datatables.net/js/jquery.dataTables.min.js') ?>" type="text/javascript"></script>
+<script src="<?php echo base_url('assets/adminlte/bower_components/datatables.net-bs/js/dataTables.bootstrap.min.js') ?>" type="text/javascript"></script>
+<script>
+  $(function () {
+    $('#table_id').DataTable({
+      'paging'      : true,
+      'lengthChange': false,
+      'searching'   : false,
+      'ordering'    : true,
+      'info'        : true,
+      'autoWidth'   : false
+    })
+  })
+</script>

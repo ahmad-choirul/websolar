@@ -41,21 +41,62 @@ class Cuser extends CI_Controller {
 		$datapost['nama'] = $this->input->post('nama',true);
 
 		if ($data['set']=='delete') {
-			$this->Muser->deleteuser($datapost['id']);
+			if ($this->Muser->deleteuser($datapost['id'])){
+				$this->session->set_flashdata('succesinsert','berhasil insert data');
+			}
+		}else{
+			$this->session->set_flashdata('failinsert', 'password anda kosong');
 		}
+
 		if ($data['set']=='update') {
 			if ($password=='') {
 				$datapost['password'] = null;
 			}else{
 				$datapost['password'] = md5($password);
 			}
-			$this->Muser->updateuser($datapost);
+			if ($this->Muser->updateuser($datapost)){
+				$this->session->set_flashdata('succesinsert','berhasil update data');
+			}else{
+				$this->session->set_flashdata('failinsert', 'gagal update data');
+			}
 		}
 		if ($data['set']=='insert') {
-			$datapost['level'] = 'user';
-			$datapost['password'] = md5($password);
-			$this->Muser->insertuser($datapost);
+			if ($password!='') {
+				$datapost['level'] = 'user';
+				$datapost['password'] = md5($password);
+				$this->Muser->insertuser($datapost);
+				$this->session->set_flashdata('succesinsert','berhasil insert data');
+			}elseif(strlen($datapost['password'])<6){
+				$this->session->set_flashdata('failinsert', 'password anda terlalu pendek');
+			}else{
+				$this->session->set_flashdata('failinsert', 'password anda kosong');
+			}
 		}
 		redirect('Cuser','refresh');
+
+	}
+	public function profile()
+	{
+		$id = $this->session->userdata('id');
+		$data = $this->Muser->getdataakun($id);
+		$this->tampil('profile',$data);
+	}
+	public function updateprofil()
+	{
+		$data['id'] = $this->input->post('id',true);
+		$data['username'] = $this->input->post('username',true);
+		$password = $this->input->post('password',true);
+		if ($password=='') {
+			$data['password'] = null;
+
+		}else{
+			$data['password'] = md5($password);
+		}
+		if ($this->Muser->updateuser($data)) {
+			$this->session->set_flashdata('succesinsert','berhasil update data');
+		}else{
+			$this->session->set_flashdata('failinsert', 'gagal update data');
+		}
+		redirect('Cuser/Profile','refresh');
 	}
 }

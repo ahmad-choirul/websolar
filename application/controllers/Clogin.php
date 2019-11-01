@@ -2,14 +2,10 @@
 class Clogin extends CI_Controller {
     function __construct() {
         parent::__construct();
-        if (!session_id()) session_start();
-        $this->load->model(array('Mlogin'));
-        if ($this->session->userdata('u_name')) {
-            redirect('dashboard1');
-        }
+        $this->load->model('Mlogin');
     }
     function index() {
-        $this->load->view('loginv2');
+        $this->load->view('login');
     }
     function proses() {
         $username = $this->input->post('username');
@@ -23,9 +19,10 @@ class Clogin extends CI_Controller {
             $getdata = $this->Mlogin->cek_login("admin",$where)->result_array()[0];
             $data_session = array(
                 'nama' => $getdata['username'],
-                'id_user' => $getdata['id'],
+                'id' => $getdata['id'],
                 'status' => "login"
             );
+            $this->session->set_userdata($data_session);
 
             $this->load->library('user_agent');
             $data['id_user'] =$getdata['id'];
@@ -33,10 +30,7 @@ class Clogin extends CI_Controller {
             $data['os'] = $this->agent->platform();
             $data['ip_address'] = $this->input->ip_address();
             $this->Mlogin->insertdatalogin($data);
-
-            $this->session->set_userdata($data_session);
-
-            redirect(base_url("datarealtime"));
+            redirect('datarealtime','refresh');
 
         }else{
             echo "Username dan password salah !";

@@ -18,7 +18,7 @@
 </script>
 </head>
 <?php 
-$this->load->model('Madd');
+$this->load->model('Mapi');
 ?>
 <body>
  <!-- <div class="navbar"><span>Rata Atas</span></div> -->
@@ -40,7 +40,7 @@ var datatotal = new Array();
   function getdatatotal() {
 
    var request = new XMLHttpRequest();
-   request.open('GET', 'ambildataratatotal', true);
+   request.open('GET', 'ambildatasensor', true);
    request.onload = function () {
     datatotal = JSON.parse(this.response);
     console.log(datatotal);

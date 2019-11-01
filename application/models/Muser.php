@@ -13,14 +13,19 @@ class Muser extends CI_Model {
 	{
 		return $this->db->get('admin')->result();
 	}
+	public function getdataakun($id)
+	{
+		$this->db->where('id', $id);
+		return $this->db->get('admin')->result_array()[0];
+	}
 public function deleteuser($id)
 	{
-		$this->db->delete('admin', array('id' => $id)); 
+		return $this->db->delete('admin', array('id' => $id)); 
 	}
 	public function updateuser($data)
 	{
 		$this->db->where('id', $data['id']);
-		$this->db->update('admin', $data);
+		return $this->db->update('admin', $data);
 	}
 	public function insertuser($data)
 	{

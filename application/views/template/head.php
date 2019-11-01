@@ -16,6 +16,7 @@
         <!-- AdminLTE Skins. Choose a skin from the css/skins 
              folder instead of downloading all of them to reduce the load. -->
         <link href="<?php echo base_url('assets/adminlte/dist/css/skins/_all-skins.min.css') ?>" rel="stylesheet" type="text/css" />
+        <link href="<?php echo base_url('assets/adminlte/bower_components/datatables.net-bs/css/dataTables.bootstrap.min.css') ?>" rel="stylesheet" type="text/css" />
         <style type="text/css">
             body, html
             {

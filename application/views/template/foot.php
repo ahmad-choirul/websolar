@@ -4,7 +4,7 @@
     <div class="pull-right hidden-xs">
         <b>Version</b> 2.0
     </div>
-    <strong>Developed By: Kelompok PKL ILKOM UNEJ </strong>
+    <strong>Developed By: Nila Choirotun Nisa'</strong>
 </footer>
 </div><!-- ./wrapper -->
 

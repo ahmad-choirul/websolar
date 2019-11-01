@@ -1,6 +1,18 @@
   <!-- Content Wrapper. Contains page content -->
   <!-- Content Header (Page header) -->
   <section class="content" >
+         <?php if ($this->session->flashdata('succesinsert') != null): ?>
+  <div class="alert alert-info alert-dismissible" data-auto-dismiss role="alert">
+    <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+    <strong>sukses!</strong><?php echo $this->session->flashdata('succesinsert'); ?>
+  </div>
+<?php endif ?>
+<?php if ($this->session->flashdata('failinsert') != null): ?>
+  <div class="alert alert-danger alert-dismissible" data-auto-dismiss role="alert">
+    <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+    <strong>warning!</strong> <?php echo $this->session->flashdata('failinsert'); ?>
+  </div>
+<?php endif ?>
     <div class="row">
       <div class="col-lg-4">
         <div class="box" >
@@ -24,7 +36,7 @@
                   <div class="col-sm-9">
 
                     <input type="text" value="insert" hidden="hidden" name="set"   id="set">
-                    <input type="text" readonly="readonly" maxlength="100" name="id" id="id" class="form-control"  placeholder="ID">
+                    <input type="text" readonly="readonly" maxlength="100" name="id" hidden="true" id="id" class="form-control"  placeholder="ID">
                   </div>
                 </div>
                 <div class="form-group">
@@ -84,7 +96,7 @@
                 <thead>
                   <tr>
                     <th> NO </th>
-                    <th> ID </th>
+                    <!-- <th> ID </th> -->
                     <th> Nama </th>
                     <th> Username </th>
                     <th> Password </th>
@@ -98,7 +110,7 @@
                   foreach ($listuser as $data): ?>
                     <tr>
                       <td><?php echo $no++; ?></td>
-                      <td><?php echo $data->id; ?></td>
+                      <!-- <td><?php echo $data->id; ?></td> -->
                       <td><?php echo $data->nama; ?></td>
                       <td><?php echo $data->username; ?></td>
                       <td><?php echo "*********"; ?></td>
@@ -139,8 +151,7 @@
    function bersih() {
      document.getElementById("id").value = '';
      document.getElementById("nama").value = '';
-     document.getElementById("alamat").value = '';
-     document.getElementById("username").value = '';
+          document.getElementById("username").value = '';
      document.getElementById("password").value = '';
      document.getElementById("set").value = "insert";
    }

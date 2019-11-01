@@ -155,7 +155,7 @@ var dataPoints4 = [];
  function getdatatotal() {
 
    var request = new XMLHttpRequest();
-   request.open('GET', 'ambildataratatotal', true);
+   request.open('GET', 'ambildatasensor', true);
    request.onload = function () {
     datatotal = JSON.parse(this.response);
   }

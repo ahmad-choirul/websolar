@@ -28,52 +28,54 @@
                     <i class="fa fa-angle-left pull-right"></i>
                 </a>
                 <ul class="treeview-menu">
-                    <li><a href="<?php echo site_url('Cuser') ?>"><i class="fa fa-circle-o"></i> Tambah User</a></li>
+                    <li><a href="<?php echo site_url('Cuser') ?>"><i class="fa fa-circle-o"></i> Data User</a></li>
                     <li><a href="<?php echo site_url('Cuser/history_login') ?>"><i class="fa fa-circle-o"></i> History Login</a></li>
                 </ul>
             </li>
-            <li class="treeview">
+           <!--  <li class="treeview">
                 <a href="#">
                     <i class="fa fa-edit"></i> <span>History</span>
                     <i class="fa fa-angle-left pull-right"></i>
                 </a>
                 <ul class="treeview-menu">
-                    <li><a href="#"><i class="fa fa-circle-o"></i> History Sudut x</a></li>
+                    <li><a href="#"><i class="fa fa-circle-o"></i> History Aktuator</a></li>
                     <li><a href="#"><i class="fa fa-circle-o"></i> History Sudut y</a></li>
                 </ul>
+            </li> -->
+            <li>
+                <a href="<?php echo site_url('Chistory/history_tracker') ?>">
+                    <i class="fa fa-dashboard"></i> <span> History Tracker</span></i>
+                </a>
             </li>
-
+            <li>
+                <a href="<?php echo site_url('Chistory/history_aktuator') ?>">
+                    <i class="fa fa-dashboard"></i> <span> History Aktuator</span></i>
+                </a>
+            </li> 
             <li class="treeview">
                 <a href="#">
                     <i class="fa fa-edit"></i> <span>Grafik</span>
                     <i class="fa fa-angle-left pull-right"></i>
                 </a>
                 <ul class="treeview-menu">
-                    <li><a href="#"><i class="fa fa-circle-o"></i> Grafik Sudut x</a></li>
-                    <li><a href="#"><i class="fa fa-circle-o"></i> Grafik Sudut y</a></li>
+                    <li><a href="#"><i class="fa fa-circle-o"></i> Grafik Sensor</a></li>
+                    <li><a href="<?php echo site_url('Cchart/lihatsuduttracker') ?>"><i class="fa fa-circle-o"></i> Grafik Tracker</a></li>
+                    <li><a href="<?php echo site_url('Cchart/lihatsudutaktuator') ?>"><i class="fa fa-circle-o"></i> Grafik Aktuator</a></li>
                 </ul>
             </li>
-            <li class="treeview">
-                <a href="#">
-                    <i class="fa fa-edit"></i> <span>Lihat Sudut</span>
-                    <i class="fa fa-angle-left pull-right"></i>
+            <li>
+                <a href="<?php echo site_url('api/lihatsetpoint') ?>">
+                    <i class="fa fa-dashboard"></i> <span> Nilai Setpoint</span></i>
                 </a>
-                <ul class="treeview-menu">
-                  
-                    <li><a href="<?php echo site_url('sudutaktuator') ?>">  <i class="fa fa-envelope"></i> <span>Lihat Sudut Aktuator</span></i></a></li>
-                    <li><a href="#">  <i class="fa fa-envelope"></i> <span>Lihat Sudut Tracker</span></i></a></li>
-               
-                </ul>
-            </li>
-
-             <li class="treeview">
+            </li> 
+<!--             <li class="treeview">
                 <a href="#">
                     <i class="fa fa-edit"></i> <span>Hitung Manual</span>
                     <i class="fa fa-angle-left pull-right"></i>
                 </a>
                 <ul class="treeview-menu">
-                  
-                    <li><a href="<?php echo site_url('Chitung') ?>">  <i class="fa fa-envelope"></i> <span>Hitung Manual Fuzzy</span></i></a></li>
+
+                    <li><a href="<?php echo site_url('Chitungfuzzy') ?>">  <i class="fa fa-envelope"></i> <span>Hitung Manual Fuzzy</span></i></a></li>
                     <li><a href="<?php echo site_url('Chitungpid') ?>">  <i class="fa fa-envelope"></i> <span>Hitung Manual PID</span></i></a></li>
                 </ul>
             </li>
@@ -81,12 +83,7 @@
                 <a href="<?php echo site_url('Csimulasi') ?>">
                     <i class="fa fa-envelope"></i> <span>Simulasi</span></i>
                 </a>
-            </li>
-            <li>
-                <a href="<?php echo site_url('tampiltiga') ?>">
-                    <i class="fa fa-folder"></i> <span>Log out</span></i>
-                </a>
-            </li>
+            </li> -->
         </ul>
     </section>
     <!-- /.sidebar -->
