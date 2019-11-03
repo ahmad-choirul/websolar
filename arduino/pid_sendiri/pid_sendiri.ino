@@ -62,16 +62,6 @@ Serial.begin(115200);
   // If you don't want calibrate, comment this line.
   mpu.calibrateGyro();
 delay(2000);
-  // Set threshold sensivty. Default 3.
-  // If you don't want use threshold, comment this line or set 0.
-  // mpu.setThreshold(3);
-
-//  int hasil = hitungpid(40,30);
-//elevasi+=hasil;
-
-
-
-
 }
  
 void loop()
@@ -101,13 +91,7 @@ void loop()
      Serial.print(" pitch = ");
       Serial.print(hasil);
     pastpitch=setpointpitch-pitch;
-//  if  (pitch<setpointpitch){
     elevasi+=hasil;
-//elevasi++;
-//    }else{
-//      elevasi-=hasil;
-//elevasi--;
-//      }
 }
 
 
@@ -125,13 +109,7 @@ void loop()
      Serial.print(" roll = ");
       Serial.print(hasil);
        pastroll=setpointroll-roll;
-//  if  (roll<setpointroll){
     azimuth-=hasil;
-//    azimuth--;
-//    }else{
-//      azimuth++;
-//azimuth+=hasil;
-//      }
 }
 
            if (azimuth < azimuthLimitLow) {
