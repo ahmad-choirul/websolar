@@ -20,6 +20,7 @@ class Clogin extends CI_Controller {
             $data_session = array(
                 'nama' => $getdata['username'],
                 'id' => $getdata['id'],
+                'level' => $getdata['level'],
                 'status' => "login"
             );
             $this->session->set_userdata($data_session);

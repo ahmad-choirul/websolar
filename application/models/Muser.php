@@ -11,6 +11,7 @@ class Muser extends CI_Model {
 	}
 	public function get_all_user()
 	{
+		$this->db->where('level', 'user');
 		return $this->db->get('admin')->result();
 	}
 	public function getdataakun($id)

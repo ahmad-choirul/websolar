@@ -9,7 +9,24 @@ class Cuser extends CI_Controller {
 		$this->load->model('Muser');
 		$this->load->model('Mlogin');
 	}
+	private function accessrules($m, $t, $p, $f){
+		if (in_array($m, $f)) {
+			return call_user_func_array(array($t, $m), $p);
+		}else{
+			redirect('Clogin','refresh');
+		}
+	}
 
+	public function _remap($method, $params){
+		$level = $this->session->userdata('level');
+		if($level=='admin'){
+			return $this->accessrules($method, $this, $params, array('index','history_login','inupdeluser','profile','updateprofil'));
+		}else if($level=='user'){
+			return $this->accessrules($method, $this, $params, array('profile','updateprofil'));
+		}else{
+			redirect('Clogin','refresh');
+		}
+	}
 	public function index()
 	{
 		$data['judul']= "Daftar User";
