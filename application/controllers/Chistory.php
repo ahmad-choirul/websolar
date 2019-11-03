@@ -7,7 +7,22 @@ class Chistory extends CI_Controller {
 		parent::__construct();
 		$this->load->model('Mapi');
 	}
+	private function accessrules($m, $t, $p, $f){
+		if (in_array($m, $f)) {
+			return call_user_func_array(array($t, $m), $p);
+		}else{
+			redirect('Clogin','refresh');
+		}
+	}
 
+	public function _remap($method, $params){
+		$level = $this->session->userdata('level');
+		if($level=='admin'||$level=='user'){
+			return $this->accessrules($method, $this, $params, array('index','history_sensor','history_tracker','history_aktuator'));
+		}else{
+			redirect('Clogin','refresh');
+		}
+	}
 	public function index()
 	{
 		
