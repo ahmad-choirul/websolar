@@ -1,0 +1,2 @@
+setpoint pid dan tanpa pid tidak sama
+tidak ada pembacaan sudut tracker semua
