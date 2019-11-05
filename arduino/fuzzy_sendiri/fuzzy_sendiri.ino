@@ -5,7 +5,6 @@ int vnb = 10; //value negatif big
       int vps = -2; //value positif small
       int vpm = -6; //value positif medium
       int vpb = -10; //value positif big
-
       int nba = -125; //batas atas negatif big
       int nbb = -1024; //batas bawah negatif big
       int nma = -50; //batas atas negatif medium
@@ -27,69 +26,47 @@ int vnb = 10; //value negatif big
      int domps = 50;
      int dompm = 125;
      int dompb = 275;
+     
     boolean awal = true;
     boolean tampilserial = false;
-
  int de = 0;
     int ce = 0;
     int pe = 0;
-
-
-     String statrangeE[2];
+    String statrangeE[2];
     String statrangeDE[2];
-
     double alfae[2];
     double alfade[2];
-
     double combine[4];
-
     int range[2];
     int statarray = 0;
     String txt = "";
 
 
-///yang fix
 #include <Servo.h > // include Servo library 
 #include <SoftwareSerial.h>
 SoftwareSerial BTserial(2, 3); // RX | TX
 #include <Wire.h> 
-//#include <LiquidCrystal_I2C.h>
-//LiquidCrystal_I2C lcd(0x27,20,4); 
+
     // 180 horizontal MAX
 Servo vertical; // horizontal servo
 int azimuth = 180; // 90;     // stand horizontal servo
-
 int azimuthLimitHigh = 180;
 int azimuthLimitLow = 0;
-
 // 45 degrees MAX
 Servo horizontal; // vertical servo 
 int elevasi = 50; //   90;     // stand vertical servo
-
 int elevasiLimitHigh = 50;
-int elevasiLimitLow = 125;
-
-// LDR pin connections
-//  name  = analogpin;
-//int ldrrd = A5; //LDR kanan bawah 
-//int ldrrt = A4; //LDR kanan atas
-//int ldrlt = A3; //ldr kiri atas
-//int ldrld = A2; //LDR kiri bawah
-//
 int ldrrd = A2; //LDR kanan bawah 
 int ldrrt = A3; //LDR kanan atas
 int ldrlt = A4; //ldr kiri atas
 int ldrld = A5; //LDR kiri bawah
-
 int iterasi=0;
 String str;
 unsigned long previousMillis = 0;        // will store last time LED was updated
-
 // constants won't change:
 const long interval = 5000;           // interval at which to blink (milliseconds)
     int tc = 200;
     int tol = 10;
-
 int outvert = 0;
     int outhor = 0;
 void setup() {
@@ -111,23 +88,16 @@ Serial.begin(9600);
 }
 
 void loop() {
-
-//  lcd.clear();
     int lt = analogRead(ldrlt); // top left
     int rt = analogRead(ldrrt); // top right
     int ld = analogRead(ldrld); // down left
     int rd = analogRead(ldrrd); // down rigt
-
-
     int rataatas = (lt + rt) / 2; // rata2 atas
     int ratabawah = (ld + rd) / 2; // rata2 bawah
     int ratakiri = (lt + ld) / 2; // rata2 kiri
     int ratakanan = (rt + rd) / 2; // rata2 kanan
-    
-//Serial.println(String()+"rataatas = "+rataatas+" ratabawah = "+ratabawah+" ratakiri = "+rataatas+" ratakanan = "+ratakanan);
     int error_vert = rataatas - ratabawah; // check beda  atas dan bawah
     int error_horizontal = ratakiri - ratakanan; // check beda  kiri and kanan
-
  if (-1 * tol > error_vert || error_vert > tol) // selisih rata2 atas dgn toleransi
     {
       if (error_vert>275){
@@ -143,7 +113,6 @@ outvert = hitungfuzzy(error_vert);
   else{
 outvert = 0;  
     }
-
 elevasi -=outvert;
  if (elevasi < elevasiLimitHigh) {
                 elevasi = elevasiLimitHigh;

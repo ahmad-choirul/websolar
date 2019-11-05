@@ -2,17 +2,14 @@
 #include <Wire.h>
 #include <Servo.h > // include Servo library
 MPU6050 mpu;
-
 double ts = 0.05;
 double kp = 0.9;
 double Ti = 0.3;
 double Td = 1;
 // double setpoint = 90;
-
 // Timers
 unsigned long timer = 0;
 float timeStep = 0.01;
-
 // Pitch, Roll and roll values
 float pitch = 0;
 float roll = 0;
@@ -24,31 +21,24 @@ boolean arah = false;
 int gerak = 0;
 Servo vertical; // horizontal servo
 int azimuth = 0; // 90;     // stand horizontal servo
-
 int azimuthLimitHigh = 180;
 int azimuthLimitLow = 0;
-
 // 45 degrees MAX
 Servo horizontal; // vertical servo
 int elevasi = 50; //   90;     // stand vertical servo
-
 int setpointroll = -60;
 int setpointpitch = 60;
-
 int elevasiLimitHigh = 50;
 int elevasiLimitLow = 125;
 int tol = 0;
-
 void (*resetFunc)(void) = 0;
 
 void setup()
 {
-
     horizontal.attach(9);
     vertical.attach(10);
     horizontal.write(azimuth);
     vertical.write(elevasi);
-
     Serial.begin(115200);
     //  Serial.println(hasil);
     Wire.begin();
@@ -56,7 +46,6 @@ void setup()
         Serial.println("Could not find a valid MPU6050 sensor, check wiring!");
         delay(500);
     }
-
     // Calibrate gyroscope. The calibration must be at rest.
     // If you don't want calibrate, comment this line.
     mpu.calibrateGyro();
@@ -66,7 +55,6 @@ void setup()
 void loop()
 {
     timer = millis();
-
     // Read normalized values
     Vector norm = mpu.readNormalizeGyro();
 
@@ -74,7 +62,6 @@ void loop()
     pitch = pitch + norm.YAxis * timeStep;
     roll = roll + norm.XAxis * timeStep;
     yaw = yaw + norm.ZAxis * timeStep;
-
     // Output raw
     Serial.print(" Pitch = ");
     Serial.print(pitch);
@@ -82,7 +69,6 @@ void loop()
     Serial.print(roll);
     Serial.print(" yaw = ");
     Serial.print(yaw);
-
     // Wait to full timeStep period
     delay((timeStep * 1000) - (millis() - timer));
     if (pitch < setpointpitch - tol || pitch > setpointpitch + tol) { // selisih rata2 atas dgn toleransi
@@ -92,7 +78,6 @@ void loop()
         pastpitch = setpointpitch - pitch;
         elevasi += hasil;
     }
-
     if (elevasi < elevasiLimitHigh) {
         elevasi = elevasiLimitHigh;
     }
@@ -126,7 +111,7 @@ void loop()
 
 int hitungpid(int feedback, int errorsebelum, int setpoint)
 {
-    int error = setpoint - feedback;
+    int error = setpoint - feedback; 
     double errorI = (((error + errorsebelum) / 2) * ts) + errorsebelum;
     double errorD = ((error - errorsebelum) / 2) * ts;
     double outP = kp * error;
