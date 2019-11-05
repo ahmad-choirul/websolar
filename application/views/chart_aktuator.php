@@ -25,7 +25,7 @@ var chart = new CanvasJS.Chart("chartContainer", {
 	animationEnabled: true,
 	zoomEnabled: true,
 	title:{
-		text: "Chart Sudut Tracker" 
+		text: "Chart Sudut Aktuator" 
 	},
 	axisY :{
 		includeZero:false
@@ -94,7 +94,7 @@ data.push(dataSeries);
 
 </script>
 <section class="content-header">
-	<div class="row">
+	<!-- <div class="row">
 		<div class="col-lg-3 col-xs-6">
 			<div class="small-box bg-aqua">
 				<div class="inner">
@@ -128,11 +128,11 @@ data.push(dataSeries);
 				</div>
 			</div>
 		</div>
-	</div>
+	</div> -->
 </section>
 
 <section class="content">
-		graph sensor tracker
+		graph sensor Aktuator
 		<small></small>
 	</h1>
 	<!-- <iframe width="100%" height=400px frameborder="0" src="<?php echo site_url('Cchart/chartpergerakanaktuator') ?>"></iframe> -->
