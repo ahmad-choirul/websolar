@@ -60,7 +60,7 @@
                     <i class="fa fa-angle-left pull-right"></i>
                 </a>
                 <ul class="treeview-menu">
-                    <li><a href="#"><i class="fa fa-circle-o"></i> Grafik Sensor</a></li>
+                    <li><a href="<?php echo site_url('Cchart/lihatsensor') ?>"><i class="fa fa-circle-o"></i> Grafik Sensor</a></li>
                     <li><a href="<?php echo site_url('Cchart/lihatsuduttracker') ?>"><i class="fa fa-circle-o"></i> Grafik Tracker</a></li>
                     <li><a href="<?php echo site_url('Cchart/lihatsudutaktuator') ?>"><i class="fa fa-circle-o"></i> Grafik Aktuator</a></li>
                 </ul>
@@ -70,7 +70,7 @@
                     <i class="fa fa-dashboard"></i> <span> Nilai Setpoint</span></i>
                 </a>
             </li> 
-<!--             <li class="treeview">
+            <li class="treeview">
                 <a href="#">
                     <i class="fa fa-edit"></i> <span>Hitung Manual</span>
                     <i class="fa fa-angle-left pull-right"></i>
@@ -85,7 +85,7 @@
                 <a href="<?php echo site_url('Csimulasi') ?>">
                     <i class="fa fa-envelope"></i> <span>Simulasi</span></i>
                 </a>
-            </li> -->
+            </li>
         </ul>
     </section>
     <!-- /.sidebar -->

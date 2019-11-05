@@ -38,6 +38,7 @@ class Chistory extends CI_Controller {
 		$this->load->view('template/js');
 		$this->load->view('template/foot');
 	}
+	
 	public function history_tracker()
 	{
 		$data['judul']= "history tracker";

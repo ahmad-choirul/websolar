@@ -3,74 +3,65 @@
 $updateInterval = 5000; //in millisecond
 $initialNumberOfDataPoints = 50;
 $x = time() * 1000 - $updateInterval * $initialNumberOfDataPoints;
-// for ($i=0; $i <count($arraylog) ; $i++) { 
-//   $poin=array("x"=>$arraylog[$i]['waktu'],"y"=>$arraylog[$i]['rataatas']);
-//   array_push($dataPoints1, $poin);
-//   $poin2=array("x"=>$arraylog[$i]['waktu'],"y"=>$arraylog[$i]['ratabawah']);
-//   array_push($dataPoints2, $poin2);
-//   $poin3=array("x"=>$arraylog[$i]['waktu'],"y"=>$arraylog[$i]['ratakanan']);
-//   array_push($dataPoints3, $poin3);
-//   $poin4=array("x"=>$arraylog[$i]['waktu'],"y"=>$arraylog[$i]['ratakiri']);
-//   array_push($dataPoints4, $poin4);
-// }
 $dataPointsphp = array();
-foreach ($arraysensor as $key => $value) {
+foreach ($arraylog as $key => $value) {
   $temp = array();
   array_push($temp, $value['rataatas']);
   array_push($temp,  $value['ratabawah']);
-    array_push($temp,$value['ratakanan']);
+  array_push($temp,$value['ratakanan']);
   array_push($temp, $value['ratakiri']);
   array_push($temp, $value['waktu']);
   array_push($dataPointsphp, $temp);
 }
 // generates first set of dataPoints 
-
-
 ?>
-  <script>
-    window.onload = function() {
- var datatotal = new Array();
+<script>
+  window.onload = function() {
+    var dataSeries = { type: "line" };
+       var datajson = getdatatotal();
+  // // adding random value
+  // var v1=datajson['rataatas'];
+  // var v2=datajson['ratabawah'];
+  // var v3=datajson['ratakanan'];
+  // var v4=datajson['ratakiri'];
+  // var xValue = datajson['waktu'];
 
-     var datajson = getdatatotal();
 
-     var v1=datajson['rataatas'];
-     var v2=datajson['ratabawah'];
-     var v3=datajson['ratakanan'];
-     var v4=datajson['ratakiri'];
+  var dataPoints1 = [];
+  var dataPoints2 = [];
+  var dataPoints3 = [];
+  var dataPoints4 = [];
+  var updateInterval = <?php echo $updateInterval ?>;
+  var arrayjs = <?php echo json_encode($dataPointsphp); ?>;
 
-     var updateInterval = <?php echo $updateInterval ?>;
-     var arrayjs = <?php echo json_encode($dataPointsphp); ?>;
-     console.table(arrayjs);
-var dataPoints1 = [];
-var dataPoints2 = [];
-var dataPoints3 = [];
-var dataPoints4 = [];
-
-  for (var j = 0; j < 300; j++) {
-    dataPoint1.push({
-      x: arrayjs[j][4],
-      // x: (Math.random()),
-      y: parseFloat(arrayjs[j][0])
-    });
+  var as = 0;
+  for (var j = 0; j < arrayjs.length; j++) {
+    dataPoints1.push({  
+    // x: arrayjs[j][4],
+    x: as,
+    y: parseFloat(arrayjs[j][0])
+  });
     dataPoints2.push({
-      x: arrayjs[j][4],
+      x: as,
       y: parseFloat(arrayjs[j][1])
     });
-      dataPoints3.push({
-      x: arrayjs[j][4],
-      y: parseFloat(arrayjs[j][2])
-    });
-        dataPoints4.push({
-      x: arrayjs[j][4],
+    dataPoints3.push({
+     x: as,
+     y: parseFloat(arrayjs[j][2])
+   });
+    dataPoints4.push({
+      x: as,
       y: parseFloat(arrayjs[j][3])
     });
+
     as++;
   }
-     var yValue1 = parseInt(v1, 10);
-     var yValue2 = parseInt(v2, 10);
-     var yValue3 =parseInt(v3, 10);
-     var yValue4 = parseInt(v4, 10);
-     var xValue = <?php echo $x ?>;
+    var yValue1 = arrayjs[arrayjs.length-1][0];
+  var yValue2 = arrayjs[arrayjs.length-1][1];
+  var yValue3 = arrayjs[arrayjs.length-1][2];
+  var yValue4 =arrayjs[arrayjs.length-1][3];
+  var xValue = arrayjs[arrayjs.length-1][4];
+     // console.table(arrayjs);
 
      var chart = new CanvasJS.Chart("chartContainer", {
       zoomEnabled: true,
@@ -136,7 +127,7 @@ var dataPoints4 = [];
     });
 
      chart.render();
-     setInterval(function(){updateChart()}, updateInterval);
+     // setInterval(function(){updateChart()}, updateInterval);
 
      function toggleDataSeries(e) {
       if (typeof(e.dataSeries.visible) === "undefined" || e.dataSeries.visible) {
@@ -148,15 +139,15 @@ var dataPoints4 = [];
       chart.render();
     }
  ////////////////////////data json ////////////////
- var datatotal = new Array();
  function getdatatotal() {
-
+ var datatotal = new Array();
    var request = new XMLHttpRequest();
    request.open('GET', 'ambildatasensor', true);
    request.onload = function () {
     datatotal = JSON.parse(this.response);
   }
   request.send();
+  console.table(datatotal);
   return datatotal;
 }
 ////////////////////////////
@@ -212,53 +203,13 @@ function updateChart() {
 
 }
 </script>
-
-	<div class="row">
-		<div class="col-lg-3 col-xs-6">
-			<div class="small-box bg-aqua">
-				<div class="inner">
-					<h3>150/150<sup style="font-size: 20px">W</sup></h3>
-					<p>WATT</p>
-				</div>
-				<div class="icon">
-					<i class="ion ion-bag"></i>
-				</div>
-			</div>
-		</div>
-		<div class="col-lg-3 col-xs-6">
-			<div class="small-box bg-green">
-				<div class="inner">
-					<h3>53/53<sup style="font-size: 20px">V</sup></h3>
-					<p>VOLTAGE</p>
-				</div>
-				<div class="icon">
-					<i class="ion ion-stats-bars"></i>
-				</div>
-			</div>
-		</div>
-		<div class="col-lg-3 col-xs-6">
-			<div class="small-box bg-yellow">
-				<div class="inner">
-					<h3>44/44<sup style="font-size: 20px">A</sup></h3>
-					<p>AMPERE</p>
-				</div>
-				<div class="icon">
-					<i class="ion ion-pie-graph"></i>
-				</div>
-			</div>
-		</div>
-	</div>
-</section>
-
 <section class="content">
-		graph sensor tracker
-		<small></small>
-	</h1>
-	<!-- <iframe width="100%" height=400px frameborder="0" src="<?php echo site_url('Cchart/chartpergerakanaktuator') ?>"></iframe> -->
-  <div id="chartContainer" style="height: 370px; width: 100%;"></div>
-  <script src="<?php echo base_url('assets/canva/canvasjs.min.js') ?>" type="text/javascript"></script>
-<section class="content-header">
-</section><!-- /.content -->	
+  graph sensor tracker
+  <small></small>
+</h1>
+<div id="chartContainer" style="height: 370px; width: 100%;"></div>
+<script src="<?php echo base_url('assets/canva/canvasjs.min.js') ?>" type="text/javascript"></script>
+</section><!-- /.content -->  
 
 </script>
 
