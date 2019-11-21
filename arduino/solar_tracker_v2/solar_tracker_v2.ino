@@ -3,6 +3,14 @@
 #include <SoftwareSerial.h>
 SoftwareSerial BTserial(2, 3); // RX | TX
 #include <Wire.h> 
+#include <MPU6050.h>
+MPU6050 mpu;
+unsigned long timer = 0;
+float timeStep = 0.01;
+// Pitch, Roll and roll values
+float pitch = 0;
+float roll = 0;
+float yaw = 0;
 //#include <LiquidCrystal_I2C.h>
 //LiquidCrystal_I2C lcd(0x27,20,4); 
     // 180 horizontal MAX
@@ -44,6 +52,14 @@ void setup() {
     vertical.attach(10);
     horizontal.write(azimuth);
     vertical.write(elevasi);
+      Wire.begin();
+  while (!mpu.begin(MPU6050_SCALE_2000DPS, MPU6050_RANGE_2G)) {
+    Serial.println("Could not find a valid MPU6050 sensor, check wiring!");
+    delay(500);
+  }
+  delay(2000);
+  mpu.calibrateGyro();
+  delay(2000);
 //     lcd.init();                      // initialize the lcd 
 //  // Print a message to the LCD.
 //  lcd.backlight();
@@ -62,7 +78,7 @@ void loop() {
     int rd = analogRead(ldrrd); // down rigt
 
     int tc = 100;
-    int tol = 10;
+    int tol = 0;
 
     int rataatas = (lt + rt) / 2; // rata2 atas
     int ratabawah = (ld + rd) / 2; // rata2 bawah
@@ -86,6 +102,22 @@ void loop() {
 
 //str =String('0')+String(rataatas)+String('b')+String(ratabawah)+String('b')+String(ratakiri)+String('b')+String(ratakanan)+String('b')+String(tc)+String('b')+String(tol);
 //String str = "/update?rataatas=" + String(rataatas) + "&ratabawah=" + String(ratabawah) + "&ratakanan=" + String(ratakanan)+ "&ratakiri=" + String(ratakiri)+ "&kd=" + String(tc)+ "&tol=" + String(tol);
+     timer = millis();
+
+  // Read normalized values
+  Vector norm = mpu.readNormalizeGyro();
+
+  // Calculate Pitch, Roll and roll
+  pitch = pitch + norm.YAxis * timeStep;
+  roll = roll + norm.XAxis * timeStep;
+  yaw = yaw + norm.ZAxis * timeStep;
+
+  // Output raw
+  Serial.print(" Pitch = ");
+  Serial.print(pitch);
+  Serial.print(" Roll = ");
+  Serial.print(roll);
+
     if (-1 * tol > error_vert || error_vert > tol) // selisih rata2 atas dgn toleransi
     {
       iterasi++;
@@ -121,7 +153,7 @@ void loop() {
             }
         } else if (ratakiri = ratakanan) {
         }
-        horizontal.write(azimuth);
+       horizontal.write(azimuth);
 //        Serial.println(String()+"X = " + elevasi+" Y = " + azimuth);
     }
 //          lcd.setCursor(0,0);
@@ -132,7 +164,7 @@ void loop() {
 //  lcd.print(iterasi);
 Serial.println(String()+"kiriatas = "+lt+" kananatas = "+rt+" kiribawah = "+ld+" kananbawah = "+rd);
 Serial.println(String()+"elevasi = "+elevasi+" azimuth = "+azimuth+" iterasi = "+iterasi);
-    delay(tc);
+//    delay(tc);
 unsigned long currentMillis = millis();
      if (currentMillis - previousMillis >= interval) {
     previousMillis = currentMillis;

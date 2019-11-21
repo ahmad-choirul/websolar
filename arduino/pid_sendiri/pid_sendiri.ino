@@ -26,8 +26,8 @@ int azimuthLimitLow = 0;
 // 45 degrees MAX
 Servo horizontal; // vertical servo
 int elevasi = 50; //   90;     // stand vertical servo
-int setpointroll = -60;
-int setpointpitch = 60;
+int setpointroll = -25;
+int setpointpitch = 5;
 int elevasiLimitHigh = 50;
 int elevasiLimitLow = 125;
 int tol = 0;
@@ -120,6 +120,6 @@ int hitungpid(int feedback, int errorsebelum, int setpoint)
     double outPID = outP + outI + outD;
     double presentase = (outPID / 729) * 100;
     Serial.print((String) " presentase = " + presentase);
-    int outnya = presentase / 5;
+    int outnya = presentase / 2;
     return outnya;
 }

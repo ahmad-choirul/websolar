@@ -46,7 +46,14 @@ int vnb = 10; //value negatif big
 #include <SoftwareSerial.h>
 SoftwareSerial BTserial(2, 3); // RX | TX
 #include <Wire.h> 
-
+//#include <MPU6050.h>
+//MPU6050 mpu;
+//unsigned long timer = 0;
+//float timeStep = 0.01;
+//// Pitch, Roll and roll values
+//float pitch = 0;
+//float roll = 0;
+//float yaw = 0;
     // 180 horizontal MAX
 Servo vertical; // horizontal servo
 int azimuth = 180; // 90;     // stand horizontal servo
@@ -56,6 +63,7 @@ int azimuthLimitLow = 0;
 Servo horizontal; // vertical servo 
 int elevasi = 50; //   90;     // stand vertical servo
 int elevasiLimitHigh = 50;
+int elevasiLimitLow = 125;
 int ldrrd = A2; //LDR kanan bawah 
 int ldrrt = A3; //LDR kanan atas
 int ldrlt = A4; //ldr kiri atas
@@ -84,7 +92,13 @@ Serial.begin(9600);
 //  lcd.print("Solar Tracker");
 //  lcd.setCursor(0,1);
 //  lcd.print("Nila C.N.");
-    delay(1000);
+//    while (!mpu.begin(MPU6050_SCALE_2000DPS, MPU6050_RANGE_2G)) {
+//    Serial.println("Could not find a valid MPU6050 sensor, check wiring!");
+//    delay(500);
+//  }
+//  delay(2000);
+//  mpu.calibrateGyro();
+//  delay(2000);
 }
 
 void loop() {
@@ -98,6 +112,24 @@ void loop() {
     int ratakanan = (rt + rd) / 2; // rata2 kanan
     int error_vert = rataatas - ratabawah; // check beda  atas dan bawah
     int error_horizontal = ratakiri - ratakanan; // check beda  kiri and kanan
+
+//      timer = millis();
+//
+//  // Read normalized values
+//  Vector norm = mpu.readNormalizeGyro();
+//
+//  // Calculate Pitch, Roll and roll
+//  pitch = pitch + norm.YAxis * timeStep;
+//  roll = roll + norm.XAxis * timeStep;
+//  yaw = yaw + norm.ZAxis * timeStep;
+//
+//  // Output raw
+//  Serial.print(" Pitch = ");
+//  Serial.print(pitch);
+//  Serial.print(" Roll = ");
+//  Serial.print(roll);
+
+
  if (-1 * tol > error_vert || error_vert > tol) // selisih rata2 atas dgn toleransi
     {
       if (error_vert>275){

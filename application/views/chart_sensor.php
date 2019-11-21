@@ -204,7 +204,7 @@ function updateChart() {
 }
 </script>
 <section class="content">
-  graph sensor tracker
+  graph sensor
   <small></small>
 </h1>
 <div id="chartContainer" style="height: 370px; width: 100%;"></div>
