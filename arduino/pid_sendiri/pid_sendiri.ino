@@ -10,12 +10,12 @@ double Td = 1;
 // Timers
 unsigned long timer = 0;
 float timeStep = 0.01;
-// Pitch, Roll and roll values
-float pitch = 0;
-float roll = 0;
+// sudut_elevasi, sudut_azimuth and sudut_azimuth values
+float sudut_elevasi = 0;
+float  = 0;
 float yaw = 0;
-float pastpitch = 0;
-float pastroll = 0;
+float pastsudut_elevasi = 0;
+float pastsudut_azimuth = 0;
 float pastyaw = 0;
 boolean arah = false;
 int gerak = 0;
@@ -26,8 +26,8 @@ int azimuthLimitLow = 0;
 // 45 degrees MAX
 Servo horizontal; // vertical servo
 int elevasi = 50; //   90;     // stand vertical servo
-int setpointroll = -25;
-int setpointpitch = 5;
+int setpointsudut_azimuth = -25;
+int setpointsudut_elevasi = 5;
 int elevasiLimitHigh = 50;
 int elevasiLimitLow = 125;
 int tol = 0;
@@ -58,24 +58,24 @@ void loop()
     // Read normalized values
     Vector norm = mpu.readNormalizeGyro();
 
-    // Calculate Pitch, Roll and roll
-    pitch = pitch + norm.YAxis * timeStep;
-    roll = roll + norm.XAxis * timeStep;
+    // Calculate sudut_elevasi, sudut_azimuth and sudut_azimuth
+    sudut_elevasi = sudut_elevasi + norm.YAxis * timeStep;
+    sudut_azimuth = sudut_azimuth + norm.XAxis * timeStep;
     yaw = yaw + norm.ZAxis * timeStep;
     // Output raw
-    Serial.print(" Pitch = ");
-    Serial.print(pitch);
-    Serial.print(" Roll = ");
-    Serial.print(roll);
+    Serial.print(" sudut_elevasi = ");
+    Serial.print(sudut_elevasi);
+    Serial.print(" sudut_azimuth = ");
+    Serial.print(sudut_azimuth);
     Serial.print(" yaw = ");
     Serial.print(yaw);
     // Wait to full timeStep period
     delay((timeStep * 1000) - (millis() - timer));
-    if (pitch < setpointpitch - tol || pitch > setpointpitch + tol) { // selisih rata2 atas dgn toleransi
-        int hasil = hitungpid(pitch, pastpitch, setpointpitch);
-        Serial.print(" pitch = ");
+    if (sudut_elevasi < setpointsudut_elevasi - tol || sudut_elevasi > setpointsudut_elevasi + tol) { // selisih rata2 atas dgn toleransi
+        int hasil = hitungpid(sudut_elevasi, pastsudut_elevasi, setpointsudut_elevasi);
+        Serial.print(" sudut_elevasi = ");
         Serial.print(hasil);
-        pastpitch = setpointpitch - pitch;
+        pastsudut_elevasi = setpointsudut_elevasi - sudut_elevasi;
         elevasi += hasil;
     }
     if (elevasi < elevasiLimitHigh) {
@@ -87,11 +87,11 @@ void loop()
     Serial.print(" elevasi = ");
     Serial.print(elevasi);
     vertical.write(elevasi);
-    if (roll < setpointroll - tol || roll > setpointroll + tol) { // selisih rata2 atas dgn toleransi
-        int hasil = hitungpid(roll, pastroll, setpointroll);
-        Serial.print(" roll = ");
+    if (sudut_azimuth < setpointsudut_azimuth - tol || sudut_azimuth > setpointsudut_azimuth + tol) { // selisih rata2 atas dgn toleransi
+        int hasil = hitungpid(sudut_azimuth, pastsudut_azimuth, setpointsudut_azimuth);
+        Serial.print(" sudut_azimuth = ");
         Serial.print(hasil);
-        pastroll = setpointroll - roll;
+        pastsudut_azimuth = setpointsudut_azimuth - sudut_azimuth;
         azimuth -= hasil;
     }
     if (azimuth < azimuthLimitLow) {
@@ -105,7 +105,7 @@ void loop()
 
     horizontal.write(azimuth);
     Serial.println();
-    if (pitch > 500 || roll > 500 || yaw > 500)
+    if (sudut_elevasi > 500 || sudut_azimuth > 500 || yaw > 500)
         resetFunc();
 }
 

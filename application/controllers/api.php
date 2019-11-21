@@ -26,6 +26,7 @@ class Api extends CI_Controller {
 		echo $setpoint;
 		return $setpoint;
 	}
+
 	public function update()
 	{
 		$string = $this->input->get('data');
@@ -33,8 +34,10 @@ class Api extends CI_Controller {
 		$ratabawah = $this->input->get('ratabawah');
 		$ratakiri = $this->input->get('ratakiri');
 		$ratakanan = $this->input->get('ratakanan');
-		$kd = $this->input->get('kd');
-		$tol = $this->input->get('tol');
+		$elevasi = $this->input->get('elevasi');
+		$azimuth = $this->input->get('azimuth');
+		$sudut_azimuth = $this->input->get('azimuth');
+		$sudut_elevasi = $this->input->get('sudut_elevasi');
 		$errorvert=abs($rataatas-$ratabawah);
 		$errorhor=abs($ratakiri-$ratakanan);
 
@@ -44,13 +47,17 @@ class Api extends CI_Controller {
 			'ratakiri' => $ratakiri,
 			'ratakanan' => $ratakanan,
 			'ratabawah' => $ratabawah,
-			'kd' => $kd,
-			'tol' =>$tol,
 			'errorvert' => $errorvert,
 			'errorhor' => $errorhor
 		);
-		$update = $this->Mapi->update($data);
-		$insert = $this->Mapi->addlog($data);
+		$datalog = array(
+			'elevasi' => $elevasi,
+			'azimuth' =>$azimuth,
+			'sudut_elevasi' => $sudut_elevasi,
+			'sudut_azimuth' =>$sudut_azimuth
+		);
+		$update = $this->Mapi->update($data);//update grafik realtim
+		$insert = $this->Mapi->addlog($datalog);//add log tracker
 	}
 }
 
