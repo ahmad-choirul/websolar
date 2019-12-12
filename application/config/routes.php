@@ -11,6 +11,6 @@ $route['tampildua'] = 'Ctampildua';
 $route['tampiltiga'] = 'Ctampiltiga';
 $route['ambildata'] = 'Cchart/ambildata';
 $route['ambildatasensor'] = 'Cchart/ambildatasensor';
-$route['update'] = 'Add/update';
+$route['update'] = 'Api/update';
 $route['404_override'] = '';
 $route['translate_uri_dashes'] = FALSE;

@@ -1,7 +1,7 @@
 ///yang fix
 #include <Servo.h > // include Servo library 
 #include <SoftwareSerial.h>
-SoftwareSerial BTserial(2, 3); // RX | TX
+SoftwareSerial serialwifi(5, 6); // RX | TX
 #include <Wire.h> 
 #include <MPU6050.h>
 MPU6050 mpu;
@@ -47,7 +47,7 @@ unsigned long previousMillis = 0;        // will store last time LED was updated
 const long interval = 5000;           // interval at which to blink (milliseconds)
 void setup() {
      Serial.begin(115200);
-  BTserial.begin(115200);
+  serialwifi.begin(115200);
     horizontal.attach(9);
     vertical.attach(10);
     horizontal.write(azimuth);
@@ -78,7 +78,7 @@ void loop() {
     int rd = analogRead(ldrrd); // down rigt
 
     int tc = 100;
-    int tol = 0;
+    int tol = 20;
 
     int rataatas = (lt + rt) / 2; // rata2 atas
     int ratabawah = (ld + rd) / 2; // rata2 bawah
@@ -101,7 +101,6 @@ void loop() {
 //  lcd.print(azimuth);
 
 //str =String('0')+String(rataatas)+String('b')+String(ratabawah)+String('b')+String(ratakiri)+String('b')+String(ratakanan)+String('b')+String(tc)+String('b')+String(tol);
-//String str = "/update?rataatas=" + String(rataatas) + "&ratabawah=" + String(ratabawah) + "&ratakanan=" + String(ratakanan)+ "&ratakiri=" + String(ratakiri)+ "&kd=" + String(tc)+ "&tol=" + String(tol);
      timer = millis();
 
   // Read normalized values
@@ -162,13 +161,16 @@ void loop() {
 //  lcd.print(String()+"" + elevasi+" " + azimuth);
 //  lcd.print(" || ");
 //  lcd.print(iterasi);
-Serial.println(String()+"kiriatas = "+lt+" kananatas = "+rt+" kiribawah = "+ld+" kananbawah = "+rd);
-Serial.println(String()+"elevasi = "+elevasi+" azimuth = "+azimuth+" iterasi = "+iterasi);
+//Serial.println(String()+"kiriatas = "+lt+" kananatas = "+rt+" kiribawah = "+ld+" kananbawah = "+rd);
+//Serial.println(String()+"elevasi = "+elevasi+" azimuth = "+azimuth+" iterasi = "+iterasi);
 //    delay(tc);
+String str = "/update?rataatas=" + String(rataatas) + "&ratabawah=" + String(ratabawah) + "&ratakanan=" + String(ratakanan)+ "&ratakiri=" + String(ratakiri)+ "&sudut_elevasi=" + String(pitch)+ "&sudut_azimuth=" + String(roll)+ "&elevasi=" + String(elevasi)+ "&azimuth=" + String(azimuth);
+    serialwifi.println(str);
+    Serial.println(str);
 unsigned long currentMillis = millis();
      if (currentMillis - previousMillis >= interval) {
     previousMillis = currentMillis;
-    BTserial.println(str);
+
       
   }
 }

@@ -36,7 +36,7 @@ class Api extends CI_Controller {
 		$ratakanan = $this->input->get('ratakanan');
 		$elevasi = $this->input->get('elevasi');
 		$azimuth = $this->input->get('azimuth');
-		$sudut_azimuth = $this->input->get('azimuth');
+		$sudut_azimuth = $this->input->get('sudut_azimuth');
 		$sudut_elevasi = $this->input->get('sudut_elevasi');
 		$errorvert=abs($rataatas-$ratabawah);
 		$errorhor=abs($ratakiri-$ratakanan);
@@ -48,7 +48,12 @@ class Api extends CI_Controller {
 			'ratakanan' => $ratakanan,
 			'ratabawah' => $ratabawah,
 			'errorvert' => $errorvert,
-			'errorhor' => $errorhor
+			'errorhor' => $errorhor,
+			'elevasi' => $elevasi,
+			'azimuth' =>$azimuth,
+			'sudut_elevasi' => $sudut_elevasi,
+			'sudut_azimuth' =>$sudut_azimuth,
+			'waktu' =>null
 		);
 		$datalog = array(
 			'elevasi' => $elevasi,
