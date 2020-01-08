@@ -16,6 +16,7 @@ float yaw = 0;
     // 180 horizontal MAX
 Servo vertical; // horizontal servo
 int azimuth = 180; // 90;     // stand horizontal servo
+int setazimuth = 0; // 90;     // stand horizontal servo
 
 int azimuthLimitHigh = 180;
 int azimuthLimitLow = 0;
@@ -23,7 +24,7 @@ int azimuthLimitLow = 0;
 // 45 degrees MAX
 Servo horizontal; // vertical servo 
 int elevasi = 50; //   90;     // stand vertical servo
-
+int setelevasi = 0; //   90;     // stand vertical servo
 int elevasiLimitHigh = 50;
 int elevasiLimitLow = 125;
 
@@ -34,11 +35,12 @@ int elevasiLimitLow = 125;
 //int ldrlt = A3; //ldr kiri atas
 //int ldrld = A2; //LDR kiri bawah
 //
-int ldrrd = A2; //LDR kanan bawah 
-int ldrrt = A3; //LDR kanan atas
-int ldrlt = A4; //ldr kiri atas
-int ldrld = A5; //LDR kiri bawah
-
+int ldrrd = A0; //LDR kanan bawah 
+int ldrrt = A1; //LDR kanan atas
+int ldrlt = A2; //ldr kiri atas
+int ldrld = A3; //LDR kiri bawah
+    int tc = 100;
+    int tol = 30;
 int iterasi=0;
 String str;
 unsigned long previousMillis = 0;        // will store last time LED was updated
@@ -77,18 +79,17 @@ void loop() {
     int ld = analogRead(ldrld); // down left
     int rd = analogRead(ldrrd); // down rigt
 
-    int tc = 100;
-    int tol = 20;
+
 
     int rataatas = (lt + rt) / 2; // rata2 atas
     int ratabawah = (ld + rd) / 2; // rata2 bawah
     int ratakiri = (lt + ld) / 2; // rata2 kiri
     int ratakanan = (rt + rd) / 2; // rata2 kanan
-    
+//Serial.println(String()+"kiriatas = "+lt+" kiribawah = "+ld+" kananatas = "+rt+" kananbawah = "+rd);    
 //Serial.println(String()+"rataatas = "+rataatas+" ratabawah = "+ratabawah+" ratakiri = "+rataatas+" ratakanan = "+ratakanan);
     int error_vert = rataatas - ratabawah; // check beda  atas dan bawah
     int error_horizontal = ratakiri - ratakanan; // check beda  kiri and kanan
-    Serial.println(String()+"Error vert = "+error_vert+" error hor = "+error_horizontal);
+//    Serial.println(String()+"Error vert = "+error_vert+" error hor = "+error_horizontal);
 //     lcd.setCursor(0,0);
 //  lcd.print("Vert/Hor || X/Y");
 //  lcd.setCursor(0,1);
@@ -112,10 +113,10 @@ void loop() {
   yaw = yaw + norm.ZAxis * timeStep;
 
   // Output raw
-  Serial.print(" Pitch = ");
-  Serial.print(pitch);
-  Serial.print(" Roll = ");
-  Serial.print(roll);
+//  Serial.print(" Pitch = ");
+//  Serial.print(pitch);
+//  Serial.print(" Roll = ");
+//  Serial.print(roll);
 
     if (-1 * tol > error_vert || error_vert > tol) // selisih rata2 atas dgn toleransi
     {
@@ -134,7 +135,10 @@ void loop() {
             }
         }else if (rataatas = ratabawah) {
         }
-        vertical.write(elevasi);
+            if  (setelevasi!=elevasi){
+       vertical.write(elevasi);
+    setelevasi=elevasi;
+}
 //        Serial.println(String()+"X = " + elevasi+" Y = " + azimuth);
     }
     if (-1 * tol > error_horizontal || error_horizontal > tol) {
@@ -152,9 +156,12 @@ void loop() {
             }
         } else if (ratakiri = ratakanan) {
         }
-       horizontal.write(azimuth);
-//        Serial.println(String()+"X = " + elevasi+" Y = " + azimuth);
+if  (setazimuth!=azimuth){
+    horizontal.write(azimuth);
+    setazimuth=azimuth;
+}
     }
+//            Serial.print(String()+"X = " + elevasi+" Y = " + azimuth);;
 //          lcd.setCursor(0,0);
 //  lcd.print(" X/Y || iterasi ");
 //  lcd.setCursor(0,1);
@@ -163,14 +170,12 @@ void loop() {
 //  lcd.print(iterasi);
 //Serial.println(String()+"kiriatas = "+lt+" kananatas = "+rt+" kiribawah = "+ld+" kananbawah = "+rd);
 //Serial.println(String()+"elevasi = "+elevasi+" azimuth = "+azimuth+" iterasi = "+iterasi);
-//    delay(tc);
+    delay(tc);
 String str = "/update?rataatas=" + String(rataatas) + "&ratabawah=" + String(ratabawah) + "&ratakanan=" + String(ratakanan)+ "&ratakiri=" + String(ratakiri)+ "&sudut_elevasi=" + String(pitch)+ "&sudut_azimuth=" + String(roll)+ "&elevasi=" + String(elevasi)+ "&azimuth=" + String(azimuth);
     serialwifi.println(str);
     Serial.println(str);
 unsigned long currentMillis = millis();
      if (currentMillis - previousMillis >= interval) {
     previousMillis = currentMillis;
-
-      
   }
 }

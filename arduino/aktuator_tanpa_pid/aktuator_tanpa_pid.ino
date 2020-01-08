@@ -3,7 +3,8 @@
 #include <Wire.h>
 
 #include <Servo.h > // include Servo library
-
+#include <SoftwareSerial.h>
+SoftwareSerial serialwifi(5, 6); // RX | TX
 MPU6050 mpu;
 
 // Timers
@@ -23,10 +24,8 @@ int azimuthLimitLow = 0;
 Servo horizontal; // vertical servo 
 int elevasi = 50; //   90;     // stand vertical servo
 
-int setpointservoroll = 82;
-int setpointservopitch = 127;
-int setpointroll = -40;
-int setpointpitch = 25;
+int setpointsudut_azimuth = 82; 
+int setpointsudut_elevasi = 127;
 int elevasiLimitHigh = 50;
 int elevasiLimitLow = 125;
 int tol = 0;
@@ -41,6 +40,7 @@ void setup() {
   horizontal.write(azimuth);
   vertical.write(elevasi);
 
+    serialwifi.begin(115200);
   Serial.begin(115200);
   //  Serial.println(hasil);
   Wire.begin();
@@ -61,8 +61,35 @@ void setup() {
   //elevasi+=hasil;
 
 }
+String getValue(String data, char separator, int index)
+{
+  int found = 0;
+  int strIndex[] = {0, -1};
+  int maxIndex = data.length()-1;
 
+  for(int i=0; i<=maxIndex && found<=index; i++){
+    if(data.charAt(i)==separator || i==maxIndex){
+        found++;
+        strIndex[0] = strIndex[1]+1;
+        strIndex[1] = (i == maxIndex) ? i+1 : i;
+    }
+  }
+
+  return found>index ? data.substring(strIndex[0], strIndex[1]) : "";
+}
 void loop() {
+
+  if (serialwifi.available()) {
+    String a = serialwifi.readString();
+    Serial.println(a);
+setpointsudut_elevasi = getValue(a,'.',2).toInt();
+setpointsudut_azimuth = getValue(a,'.',3).toInt();
+    Serial.print("setpint sudut_elevasi = ");
+Serial.println(setpointsudut_elevasi);
+    Serial.print("setpint sudut_azimuth = ");
+Serial.println(setpointsudut_azimuth);
+  }
+  
   timer = millis();
 
   // Read normalized values
@@ -74,18 +101,18 @@ void loop() {
   yaw = yaw + norm.ZAxis * timeStep;
 
   // Output raw
-  Serial.print(" Pitch = ");
-  Serial.print(pitch);
-  Serial.print(" Roll = ");
-  Serial.print(roll);
-  Serial.print(" yaw = ");
-  Serial.print(yaw);
+//  Serial.print(" Pitch = ");
+//  Serial.print(pitch);
+//  Serial.print(" Roll = ");
+//  Serial.print(roll);
+//  Serial.print(" yaw = ");
+//  Serial.print(yaw);
 
   // Wait to full timeStep period
   delay((timeStep * 1000) - (millis() - timer));
-  if (elevasi < setpointservopitch) {
+  if (elevasi < setpointsudut_elevasi) {
     elevasi++;
-  } else if (elevasi > setpointservopitch) {
+  } else if (elevasi > setpointsudut_elevasi) {
     elevasi--;
   }
   //}
@@ -99,12 +126,12 @@ void loop() {
   if (elevasi > elevasiLimitLow) {
     elevasi = elevasiLimitLow;
   }
-  Serial.print(" elevasi = ");
-  Serial.print(elevasi);
+//  Serial.print(" elevasi = ");
+//  Serial.print(elevasi);
   vertical.write(elevasi);
-  if (azimuth < setpointservoroll) {
+  if (azimuth < setpointsudut_azimuth) {
     azimuth++;
-  } else if (azimuth > setpointservoroll) {
+  } else if (azimuth > setpointsudut_azimuth) {
     azimuth--;
   } else {
     b = false;
@@ -115,13 +142,11 @@ void loop() {
   if (azimuth > azimuthLimitHigh) {
     azimuth = azimuthLimitHigh;
   }
-  Serial.print(" azimuth = ");
-  Serial.print(azimuth);
+//  Serial.print(" azimuth = ");
+//  Serial.print(azimuth);
 
   horizontal.write(azimuth);
-  Serial.println();
+//  Serial.println();
   if (pitch > 500 || roll > 500 || yaw > 500)
     resetFunc();
-  if (!a && !b)
-    exit(0);
 }

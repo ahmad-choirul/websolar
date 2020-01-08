@@ -22,8 +22,9 @@ class Api extends CI_Controller {
 			'sudut_azimuth' => $get['sudut_azimuth'], 
 			'elevasi' => $get['elevasi'], 
 			'azimuth' => $get['azimuth'] );
-		$setpoint = json_encode($setpoint);
-		echo $setpoint;
+		// $setpoint = json_encode($setpoint);
+		// echo $setpoint;
+		echo implode(".", $setpoint);
 		return $setpoint;
 	}
 
