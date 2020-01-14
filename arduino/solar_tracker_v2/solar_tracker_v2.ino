@@ -7,6 +7,10 @@ SoftwareSerial serialwifi(5, 6); // RX | TX
 MPU6050 mpu;
 unsigned long timer = 0;
 float timeStep = 0.01;
+unsigned long Milliswifi = 0; //inisialisasi waktu kirim
+// constants won't change :
+const long intervalwifi = 2000;           // interval at which to blink (milliseconds)
+
 // Pitch, Roll and roll values
 float pitch = 0;
 float roll = 0;
@@ -78,9 +82,7 @@ void loop() {
     int rt = analogRead(ldrrt); // top right
     int ld = analogRead(ldrld); // down left
     int rd = analogRead(ldrrd); // down rigt
-
-
-
+    
     int rataatas = (lt + rt) / 2; // rata2 atas
     int ratabawah = (ld + rd) / 2; // rata2 bawah
     int ratakiri = (lt + ld) / 2; // rata2 kiri
@@ -175,7 +177,14 @@ String str = "/update?rataatas=" + String(rataatas) + "&ratabawah=" + String(rat
     serialwifi.println(str);
     Serial.println(str);
 unsigned long currentMillis = millis();
+
      if (currentMillis - previousMillis >= interval) {
     previousMillis = currentMillis;
+  }
+unsigned long Milliswifi = millis();
+  if (currentMillis - previousMillis >= interval) {
+    // save the last time you blinked the LED
+    previousMillis = currentMillis;
+    serialwifi.println(str);
   }
 }

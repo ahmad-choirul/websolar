@@ -1,3 +1,4 @@
+
 int vnb = 10; //value negatif big
       int vnm = 6; //value negatif medium
       int vns = 2; //value negatif small
