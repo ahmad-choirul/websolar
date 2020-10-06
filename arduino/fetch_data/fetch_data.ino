@@ -1,12 +1,12 @@
 #include <ESP8266HTTPClient.h>
 #include <ESP8266WiFi.h>
 #include <SoftwareSerial.h>
-#include <ArduinoJson.h>
-SoftwareSerial s(D6,D5);
+SoftwareSerial s(D6,D5); //RX TX
 int ledon = 2; //pin D4
 int ledstat = 0; //pin D3
 const char* ssid = "wifi";
 const char* password = "12345678";
+String status="-94.07X634.41X87X124";
 void setup () {
   Serial.begin(115200);
   s.begin(115200);
@@ -40,45 +40,22 @@ String getValue(String data,char separator,int index){
   return ketemu;
  }
 void loop() {
- 
-  // put your main code here, to run repeatedly:
+
 if (WiFi.status() == WL_CONNECTED){
   HTTPClient http;
-  http.begin("http://192.168.137.1/websolar/api/getsetpoint");
+  http.begin(String("")+"http://192.168.137.1/websolar/api/getsetpoint/" + status+"X2");
+  Serial.println(String("")+"http://192.168.137.1/websolar/api/getsetpoint/" + status+"X2");
   digitalWrite(ledstat,HIGH);
   int httpCode = http.GET();
   if (httpCode > 0){
-    String status = http.getString();
-//    s.println(123);
+    status = http.getString();
     Serial.println(status);
-//    Serial.print("sudut elevasi = ");
-//    String data1 = getValue(status,',',0);
-//    Serial.println(data1);
-//    Serial.print("sudut azimuth = ");
-//    String data2 = getValue(status,',',1);
-//    Serial.println(data2);
-//    Serial.print("elevasi = ");
-//    String data3 = getValue(status,',',2);
-//    Serial.println(data3);
-//    Serial.print("azimuth = ");
-//    String data4 = getValue(status,',',3);
-//    Serial.println(data4);
-//  StaticJsonBuffer<1000> jsonBuffer;
-//  JsonObject& root = jsonBuffer.createObject();
-//  root["sudut_elevasi"] = getValue(status,',',0);
-//   root["sudut_azimuth"] = getValue(status,',',1);
-//    root["elevasi"] = getValue(status,',',2);
-//     root["azimuth"] = getValue(status,',',3);
-//  if (s.available()>0){
-//    root.printTo(s);
-//    }
 s.println(status);
     }
   http.end();
   }else{
     Serial.println("delay");
     }
-    
     delay(1500);
     digitalWrite(ledstat,LOW);
      delay(1500);

@@ -1,11 +1,8 @@
-#include <MPU6050.h>
-
 #include <Wire.h>
 
 #include <Servo.h > // include Servo library
 #include <SoftwareSerial.h>
 SoftwareSerial serialwifi(5, 6); // RX | TX
-MPU6050 mpu;
 
 // Timers
 unsigned long timer = 0;
@@ -13,7 +10,6 @@ float timeStep = 0.01;
 // Pitch, Roll and roll values
 float pitch = 0;
 float roll = 0;
-float yaw = 0;
 Servo vertical; // horizontal servo
 int azimuth = 0; // 90;     // stand horizontal servo
 
@@ -42,24 +38,6 @@ void setup() {
 
     serialwifi.begin(115200);
   Serial.begin(115200);
-  //  Serial.println(hasil);
-  Wire.begin();
-  while (!mpu.begin(MPU6050_SCALE_2000DPS, MPU6050_RANGE_2G)) {
-    Serial.println("Could not find a valid MPU6050 sensor, check wiring!");
-    delay(500);
-  }
-
-  // Calibrate gyroscope. The calibration must be at rest.
-  // If you don't want calibrate, comment this line.
-  mpu.calibrateGyro();
-  delay(2000);
-  // Set threshold sensivty. Default 3.
-  // If you don't want use threshold, comment this line or set 0.
-  // mpu.setThreshold(3);
-
-  //  int hasil = hitungpid(40,30);
-  //elevasi+=hasil;
-
 }
 String getValue(String data, char separator, int index)
 {
@@ -82,8 +60,8 @@ void loop() {
   if (serialwifi.available()) {
     String a = serialwifi.readString();
     Serial.println(a);
-setpointsudut_elevasi = getValue(a,'.',2).toInt();
-setpointsudut_azimuth = getValue(a,'.',3).toInt();
+setpointsudut_elevasi = getValue(a,'X',0).toInt();
+setpointsudut_azimuth = abs(getValue(a,'X',1).toInt()-180);
     Serial.print("setpint sudut_elevasi = ");
 Serial.println(setpointsudut_elevasi);
     Serial.print("setpint sudut_azimuth = ");
@@ -91,24 +69,6 @@ Serial.println(setpointsudut_azimuth);
   }
   
   timer = millis();
-
-  // Read normalized values
-  Vector norm = mpu.readNormalizeGyro();
-
-  // Calculate Pitch, Roll and roll
-  pitch = pitch + norm.YAxis * timeStep;
-  roll = roll + norm.XAxis * timeStep;
-  yaw = yaw + norm.ZAxis * timeStep;
-
-  // Output raw
-//  Serial.print(" Pitch = ");
-//  Serial.print(pitch);
-//  Serial.print(" Roll = ");
-//  Serial.print(roll);
-//  Serial.print(" yaw = ");
-//  Serial.print(yaw);
-
-  // Wait to full timeStep period
   delay((timeStep * 1000) - (millis() - timer));
   if (elevasi < setpointsudut_elevasi) {
     elevasi++;
@@ -126,8 +86,6 @@ Serial.println(setpointsudut_azimuth);
   if (elevasi > elevasiLimitLow) {
     elevasi = elevasiLimitLow;
   }
-//  Serial.print(" elevasi = ");
-//  Serial.print(elevasi);
   vertical.write(elevasi);
   if (azimuth < setpointsudut_azimuth) {
     azimuth++;
@@ -142,11 +100,5 @@ Serial.println(setpointsudut_azimuth);
   if (azimuth > azimuthLimitHigh) {
     azimuth = azimuthLimitHigh;
   }
-//  Serial.print(" azimuth = ");
-//  Serial.print(azimuth);
-
   horizontal.write(azimuth);
-//  Serial.println();
-  if (pitch > 500 || roll > 500 || yaw > 500)
-    resetFunc();
 }

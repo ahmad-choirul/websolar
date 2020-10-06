@@ -27,14 +27,27 @@ class Mapi extends CI_Model {
    $insert = $this->db->insert('admin', $data);
    return $data;
  }
- public function addlog($data)
+ public function datalogaktuator($data)
+ {
+  $this->db->insert('tabellogaktuator', $data);
+ }
+ public function addlogtracker($data)
  {
   $this->db->insert('tabellogtracker', $data);
 }
+public function addlogsensor($data)
+ {
+  $this->db->insert('tabellogsensor', $data);
+}
+public function getdatarealtimesensorjson(){
+  $query = $this->db->select('*')->from('tabelupdate')->order_by("id","desc")->limit(1)->get();
+  $datarealtime = $query->result_array()[0];
+  return json_encode($datarealtime);
+}
 public function getdatarealtimesensor(){
   $query = $this->db->select('*')->from('tabelupdate')->order_by("id","desc")->limit(1)->get();
-  $datarealtime = $query->row();
-  return json_encode($datarealtime);
+  $datarealtime = $query->result_array();
+  return $datarealtime;
 }
 public function getdatasensor()
 {
@@ -44,19 +57,19 @@ public function getdatasensor()
 }
 public function getdatapergerakantracker()
 {
-  $query = "SELECT * FROM `tabellogtracker` WHERE date(waktu) = (SELECT date(waktu) from tabellogtracker ORDER BY waktu desc limit 1)";
+  $query = "SELECT * FROM `tabellogtracker` WHERE waktu >= NOW() - INTERVAL 1 day";
   $hasil= $this->db->query($query)->result_array(); 
   return array_reverse($hasil);
 }
 public function getdatapergerakantrackerjson()
 {
-  $query = "SELECT * FROM `tabellogtracker` WHERE waktu >= NOW() - INTERVAL 3 day ORDER BY `tabellogtracker`.`id` desc LIMIT 1";
+  $query = "SELECT * FROM `tabellogsensor` WHERE waktu >= NOW() - INTERVAL 1 day ORDER BY `tabellogsensor`.`id` desc ";
   $hasil= $this->db->query($query)->row(); 
   return json_encode($hasil);
 }
 public function getdatapergerakanaktuator()
 {
-  $query = "SELECT * FROM `tabellogaktuator` WHERE date(waktu) = (SELECT date(waktu) from tabellogaktuator ORDER BY waktu desc limit 1)";
+  $query = "SELECT * FROM `tabellogaktuator` WHERE waktu >= NOW() - INTERVAL 1 day ORDER BY `tabellogaktuator`.`id` desc";
   $hasil= $this->db->query($query)->result_array(); 
   return array_reverse($hasil);
 }
@@ -72,11 +85,13 @@ public function get_historysensor()
     }
     public function get_historytracker()
     {
+      $this->db->order_by('waktu', 'desc');
         return $this->db->get('tabellogtracker')->result();
     }
     public function get_historyaktuator($no_aktuator='')
     {
       $this->db->where('no_aktuator', $no_aktuator);
+      $this->db->order_by('waktu', 'desc');
         return $this->db->get('tabellogaktuator')->result();
     }
     public function get_listaktuator()

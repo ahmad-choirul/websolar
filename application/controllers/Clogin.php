@@ -31,7 +31,7 @@ class Clogin extends CI_Controller {
             $data['os'] = $this->agent->platform();
             $data['ip_address'] = $this->input->ip_address();
             $this->Mlogin->insertdatalogin($data);
-            redirect('datarealtime','refresh');
+            redirect('Cchart/datarealtime','refresh');
 
         }else{
             echo "Username dan password salah !";

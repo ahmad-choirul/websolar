@@ -1,16 +1,16 @@
 <?php
 
-$updateInterval = 5000; //in millisecond
+$updateInterval = 3000;
 $initialNumberOfDataPoints = 50;
 $x = time() * 1000 - $updateInterval * $initialNumberOfDataPoints;
 $dataPointsphp = array();
-foreach ($arraylog as $key => $value) {
+for ($i=0; $i <count($arraysensor) ; $i++) { 
   $temp = array();
-  array_push($temp, $value['rataatas']);
-  array_push($temp,  $value['ratabawah']);
-  array_push($temp,$value['ratakanan']);
-  array_push($temp, $value['ratakiri']);
-  array_push($temp, $value['waktu']);
+  array_push($temp, $arraysensor[$i]['rataatas']);
+  array_push($temp,  $arraysensor[$i]['ratabawah']);
+  array_push($temp,$arraysensor[$i]['ratakanan']);
+  array_push($temp, $arraysensor[$i]['ratakiri']);
+  array_push($temp, $arraysensor[$i]['waktu']);
   array_push($dataPointsphp, $temp);
 }
 // generates first set of dataPoints 
@@ -19,12 +19,12 @@ foreach ($arraylog as $key => $value) {
   window.onload = function() {
     var dataSeries = { type: "line" };
        var datajson = getdatatotal();
-  // // adding random value
-  // var v1=datajson['rataatas'];
-  // var v2=datajson['ratabawah'];
-  // var v3=datajson['ratakanan'];
-  // var v4=datajson['ratakiri'];
-  // var xValue = datajson['waktu'];
+
+  var v1=datajson['rataatas'];
+  var v2=datajson['ratabawah'];
+  var v3=datajson['ratakanan'];
+  var v4=datajson['ratakiri'];
+  var xValue = datajson['waktu'];
 
 
   var dataPoints1 = [];
@@ -72,7 +72,7 @@ foreach ($arraylog as $key => $value) {
         title: "chart updates every " + updateInterval / 1000 + " secs"
       },
       axisY:{
-        suffix: " derajat",
+        suffix: " ",
         includeZero: false
       }, 
       toolTip: {
@@ -89,45 +89,45 @@ foreach ($arraylog as $key => $value) {
         type: "spline",
         name: "Rata-rata Atas",
         xValueType: "dateTime",
-        yValueFormatString: "#,### derajat",
+        yValueFormatString: "#,### ",
         xValueFormatString: "hh:mm:ss TT",
         showInLegend: true,
-        legendText: "{name} " + yValue1 + " derajat",
+        legendText: "{name} " + yValue1 + " ",
         dataPoints: dataPoints1
       },
       { 
         type: "spline",
         name: "Rata-rata Bawah",
         xValueType: "dateTime",
-        yValueFormatString: "#,### derajat",
+        yValueFormatString: "#,### ",
         xValueFormatString: "hh:mm:ss TT",
         showInLegend: true,
-        legendText: "{name} " + yValue2 + " derajat",
+        legendText: "{name} " + yValue2 + " ",
         dataPoints: dataPoints2
       },
       { 
         type: "spline",
         name: "Rata-rata Kanan",
         xValueType: "dateTime",
-        yValueFormatString: "#,### derajat",
+        yValueFormatString: "#,### ",
         xValueFormatString: "hh:mm:ss TT",
         showInLegend: true,
-        legendText: "{name} " + yValue3 + " derajat",
+        legendText: "{name} " + yValue3 + " ",
         dataPoints: dataPoints3
       },
       {       
         type: "spline",
         name: "Rata-rata Kiri" ,
         xValueType: "dateTime",
-        yValueFormatString: "#,### derajat",
+        yValueFormatString: "#,### ",
         showInLegend: true,
-        legendText: "{name} " + yValue4 + " derajat",
+        legendText: "{name} " + yValue4 + " ",
         dataPoints: dataPoints4
       }]
     });
 
      chart.render();
-     // setInterval(function(){updateChart()}, updateInterval);
+     setInterval(function(){updateChart()}, updateInterval);
 
      function toggleDataSeries(e) {
       if (typeof(e.dataSeries.visible) === "undefined" || e.dataSeries.visible) {
@@ -141,22 +141,26 @@ foreach ($arraylog as $key => $value) {
  ////////////////////////data json ////////////////
  function getdatatotal() {
  var datatotal = new Array();
+ 
    var request = new XMLHttpRequest();
    request.open('GET', 'ambildatasensor', true);
    request.onload = function () {
-    datatotal = JSON.parse(this.response);
+   datatotal = JSON.parse(this.response);
+
   }
   request.send();
-  console.table(datatotal);
+   console.log(datatotal);
   return datatotal;
 }
+
+
 ////////////////////////////
 
-
 function updateChart() {
+
   var datajson = getdatatotal();
 
-  var deltaY1, deltaY2,deltaY5, deltaY4;
+  var deltaY1, deltaY2,deltaY3, deltaY4;
   xValue += updateInterval;
 
   // adding random value
@@ -194,10 +198,10 @@ function updateChart() {
     dataPoints1.shift();
   } 
   // updating legend text with  updated with y Value 
-  chart.options.data[0].legendText = " Rata-rata Atas " + yValue1 + " derajat";
-  chart.options.data[1].legendText = " Rata-rata Bawah " + yValue2+ " derajat"; 
-  chart.options.data[2].legendText = " Rata-rata Kanan " + yValue3 + " derajat";
-  chart.options.data[3].legendText = " Rata-rata Kiri " + yValue4+ " derajat"; 
+  chart.options.data[0].legendText = " Rata-rata Atas " + yValue1 + " ";
+  chart.options.data[1].legendText = " Rata-rata Bawah " + yValue2+ " "; 
+  chart.options.data[2].legendText = " Rata-rata Kanan " + yValue3 + " ";
+  chart.options.data[3].legendText = " Rata-rata Kiri " + yValue4+ " "; 
   chart.render();
 }
 
@@ -207,6 +211,7 @@ function updateChart() {
   graph sensor
   <small></small>
 </h1>
+<div class="mypanel"></div>
 <div id="chartContainer" style="height: 370px; width: 100%;"></div>
 <script src="<?php echo base_url('assets/canva/canvasjs.min.js') ?>" type="text/javascript"></script>
 </section><!-- /.content -->  

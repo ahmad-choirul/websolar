@@ -1,19 +1,20 @@
 ///yang fix
 #include <Servo.h > // include Servo library 
 #include <SoftwareSerial.h>
-SoftwareSerial serialwifi(5, 6); // RX | TX
+SoftwareSerial serialwifi(2, 3); // RX | TX
 #include <Wire.h> 
 #include <MPU6050.h>
 MPU6050 mpu;
 unsigned long timer = 0;
 float timeStep = 0.01;
-// Pitch, Roll and roll values
-float pitch = 0;
-float roll = 0;
+unsigned long Milliswifi = 0; //inisialisasi waktu kirim
+// constants won't change :
+const long intervalwifi = 3000;           // interval at which to blink (milliseconds)
+
+// sudut_elevasi, sudut_azimuth and sudut_azimuth values
+float sudut_elevasi = 0;
+float sudut_azimuth = 0;
 float yaw = 0;
-//#include <LiquidCrystal_I2C.h>
-//LiquidCrystal_I2C lcd(0x27,20,4); 
-    // 180 horizontal MAX
 Servo vertical; // horizontal servo
 int azimuth = 180; // 90;     // stand horizontal servo
 int setazimuth = 0; // 90;     // stand horizontal servo
@@ -40,13 +41,13 @@ int ldrrt = A1; //LDR kanan atas
 int ldrlt = A2; //ldr kiri atas
 int ldrld = A3; //LDR kiri bawah
     int tc = 100;
-    int tol = 30;
+    int tol = 10;
 int iterasi=0;
 String str;
 unsigned long previousMillis = 0;        // will store last time LED was updated
 
 // constants won't change:
-const long interval = 5000;           // interval at which to blink (milliseconds)
+const long interval = 3000;           // interval at which to blink (milliseconds)
 void setup() {
      Serial.begin(115200);
   serialwifi.begin(115200);
@@ -60,7 +61,7 @@ void setup() {
     delay(500);
   }
   delay(2000);
-  mpu.calibrateGyro();
+//  mpu.calibrateGyro();
   delay(2000);
 //     lcd.init();                      // initialize the lcd 
 //  // Print a message to the LCD.
@@ -78,9 +79,7 @@ void loop() {
     int rt = analogRead(ldrrt); // top right
     int ld = analogRead(ldrld); // down left
     int rd = analogRead(ldrrd); // down rigt
-
-
-
+    
     int rataatas = (lt + rt) / 2; // rata2 atas
     int ratabawah = (ld + rd) / 2; // rata2 bawah
     int ratakiri = (lt + ld) / 2; // rata2 kiri
@@ -107,16 +106,16 @@ void loop() {
   // Read normalized values
   Vector norm = mpu.readNormalizeGyro();
 
-  // Calculate Pitch, Roll and roll
-  pitch = pitch + norm.YAxis * timeStep;
-  roll = roll + norm.XAxis * timeStep;
-  yaw = yaw + norm.ZAxis * timeStep;
+  // Calculate sudut_elevasi, sudut_azimuth and sudut_azimuth
+  sudut_elevasi = sudut_elevasi + norm.YAxis * timeStep;
+  sudut_azimuth = sudut_azimuth + norm.XAxis * timeStep;
+//  yaw = yaw + norm.ZAxis * timeStep;
 
   // Output raw
-//  Serial.print(" Pitch = ");
-//  Serial.print(pitch);
-//  Serial.print(" Roll = ");
-//  Serial.print(roll);
+//  Serial.print(" sudut_elevasi = ");
+//  Serial.print(sudut_elevasi);
+//  Serial.print(" sudut_azimuth = ");
+//  Serial.print(sudut_azimuth);
 
     if (-1 * tol > error_vert || error_vert > tol) // selisih rata2 atas dgn toleransi
     {
@@ -161,21 +160,19 @@ if  (setazimuth!=azimuth){
     setazimuth=azimuth;
 }
     }
-//            Serial.print(String()+"X = " + elevasi+" Y = " + azimuth);;
-//          lcd.setCursor(0,0);
-//  lcd.print(" X/Y || iterasi ");
-//  lcd.setCursor(0,1);
-//  lcd.print(String()+"" + elevasi+" " + azimuth);
-//  lcd.print(" || ");
-//  lcd.print(iterasi);
-//Serial.println(String()+"kiriatas = "+lt+" kananatas = "+rt+" kiribawah = "+ld+" kananbawah = "+rd);
-//Serial.println(String()+"elevasi = "+elevasi+" azimuth = "+azimuth+" iterasi = "+iterasi);
-    delay(tc);
-String str = "/update?rataatas=" + String(rataatas) + "&ratabawah=" + String(ratabawah) + "&ratakanan=" + String(ratakanan)+ "&ratakiri=" + String(ratakiri)+ "&sudut_elevasi=" + String(pitch)+ "&sudut_azimuth=" + String(roll)+ "&elevasi=" + String(elevasi)+ "&azimuth=" + String(azimuth);
-    serialwifi.println(str);
-    Serial.println(str);
+delay(tc);
+String str = "/update/" + String(rataatas) + "X" + String(ratabawah) + "X" + String(ratakanan)+ "X" + String(ratakiri)+ "X" + String(sudut_elevasi)+ "X" + String(sudut_azimuth)+ "X" + String(elevasi)+ "X" + String(azimuth);
+//    serialwifi.println(str);
+//    Serial.println(str);
+Serial.print(azimuth);
+Serial.print(" / ");
+Serial.println(elevasi);
 unsigned long currentMillis = millis();
-     if (currentMillis - previousMillis >= interval) {
+
+unsigned long Milliswifi = millis();
+  if (currentMillis - previousMillis >= interval) {
+    // save the last time you blinked the LED
     previousMillis = currentMillis;
+    serialwifi.println(str);
   }
 }

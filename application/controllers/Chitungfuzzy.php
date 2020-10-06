@@ -1,6 +1,6 @@
 	<?php if ( ! defined('BASEPATH')) exit('No direct script access allowed');
 
-	class Chitungfuzzyfuzzy extends CI_Controller {
+	class Chitungfuzzy extends CI_Controller {
 		private $hasiloutput = "";
 	private $vnb = 10; //value negatif big
 	    private $vnm = 6; //value negatif medium
@@ -61,7 +61,7 @@
 	   	if ($errorsebelum =='kosong') {
 	   		$deltaerror=$error;
 	   	}else{
-	   		$deltaerror = $errorsebelum-$error;
+	   		$deltaerror = $error-$errorsebelum;
 	   	}
 	   	if ($error>=-10&&$error<=10) {
 	   		$arrayinput = array('error' => $error,'deltaerror' => $deltaerror,'hasil' => '0');
@@ -77,25 +77,31 @@
 	   	$this->Mhitungmanual->hapusdata($id);
 	   	redirect('Chitungfuzzy','refresh');
 	   }
-	   private function hitungfuzzy($error,$deltaerror)
+	   public function hitungfuzzy($error,$deltaerror)
 	   {
 	   	$this->statrangeE=$this->cekrange($error,$this->statrangeE);
 	   	$hasiloutput = "";
 	   	if ($this->statrangeE[1] != null) { //pengecekan apakah errornya masuk di satu atau dua himpunan (misal diatas 125 pasti Negatif Medium) yagn ini dua hipunan
 	   		$this->hasiloutput.=("CE = ". $error);
 	   		$this->hasiloutput.=("\n");
-	   		$this->hasiloutput.=($this->statrangeE[0] ." = ");
-	   		$this->alfae[0] = (double) abs(($error - $this->range[1])) / abs(($this->range[0] - $this->range[1]));
+
+	   		// if ($error<) {
+	   		// 	# code...
+	   		// }
+
+
+	   		$this->hasiloutput.=($this->statrangeE[0] ." = (".$error."+".$this->range[1].")/(".$this->range[1]."-".$this->range[0])." = ";
+	   		$this->alfae[0] = (double) (($error - $this->range[1])) / (($this->range[1] - $this->range[0]));
 	   		$this->hasiloutput.=($this->alfae[0]);
-	   		$this->hasiloutput.=("  ". $this->statrangeE[1] ." = ");
-	   		$this->alfae[1] = (double) abs($error - $this->range[0]) / abs($this->range[0] - $this->range[1]);
+	   		$this->hasiloutput.=("  ". $this->statrangeE[1]." = (".$error."+".$this->range[0].")/(".$this->range[1]."-".$this->range[0])." = ";
+	   		$this->alfae[1] = (double) ($error - $this->range[0]) / ($this->range[1] - $this->range[0]);
 	   		$this->hasiloutput.=($this->alfae[1]);
 	   		$this->hasiloutput.=("\n");
 	   	} else {
 	   		$this->hasiloutput.=("CE = ". $error);
 	   		$this->hasiloutput.=("\n");
 	   		$this->hasiloutput.=($this->statrangeE[0] ." = ");
-	   		$this->alfae[0] = (double) abs(($deltaerror - $this->range[1])) / abs(($this->range[0] - $this->range[1]));
+	   		$this->alfae[0] = (double) (($deltaerror - $this->range[1])) / (($this->range[0] - $this->range[1]));
 	   		$this->hasiloutput.=(1);
 	   		$this->hasiloutput.=("\n");
 	   		$this->hasiloutput.=("==========================");
@@ -105,11 +111,12 @@
 	   	if ($this->statrangeDE[1] != null) {
 	   		$this->hasiloutput.=("DE = ". $deltaerror);
 	   		$this->hasiloutput.=("\n");
-	   		$this->hasiloutput.=($this->statrangeDE[0] ." = ");
-	   		$this->alfade[0] = (double) abs(($deltaerror - $this->range[1])) / abs(($this->range[0] - $this->range[1]));
+	   		$this->hasiloutput.=($this->statrangeDE[0] ." = (".$deltaerror 	."+".$this->range[1].")/(".$this->range[0]."-".$this->range[1])." = ";
+	   		$this->alfade[0] = (double) (($deltaerror - $this->range[1])) / (($this->range[0] - $this->range[1]));
 	   		$this->hasiloutput.=(($this->alfade[0]));
-	   		$this->hasiloutput.=("  ". $this->statrangeDE[1] ." = ");
-	   		$this->alfade[1] = (double) abs($deltaerror - $this->range[0]) / abs($this->range[0] - $this->range[1]);
+	   		$this->hasiloutput.=("  ". $this->statrangeDE[1]." = (".$deltaerror."+".$this->range[0].")/(".$this->range[0]."-".$this->range[1])." = ";
+
+	   		$this->alfade[1] = (double) ($deltaerror - $this->range[0]) / ($this->range[0] - $this->range[1]);
 	   		$this->hasiloutput.=(($this->alfade[1]));
 	   		$this->hasiloutput.=("\n");
 	   		$this->hasiloutput.=("==========================");
@@ -118,7 +125,7 @@
 	   		$this->hasiloutput.=("DE = ". $deltaerror);
 	   		$this->hasiloutput.=("\n");
 	   		$this->hasiloutput.=($this->statrangeDE[0] ." = ");
-	   		$this->alfade[0] = (double) abs(($deltaerror - $this->range[1])) / abs(($this->range[0] - $this->range[1]));
+	   		$this->alfade[0] = (double) (($deltaerror - $this->range[1])) / (($this->range[0] - $this->range[1]));
 	   		$this->hasiloutput.=((1));
 	   		$this->hasiloutput.=("\n");
 	   		$this->hasiloutput.=("==========================");
@@ -204,6 +211,18 @@
 	        }
 	        return $hasiltotal;
 	    }
+	    private function ubahnilai($range)
+	    {
+	    	$nilai=0;
+	    	$rang = array("nb","nm","ns","ze","ps","pm","pb");
+	    	$nilairang = array(-10, -6, -2, 0, 2, 6, 10);
+	    	for ($i = 0; $i < sizeof($rang); $i++) {
+	    		if ($range==$rang[$i]) {
+	    			$nilai = $nilairang[$i];
+	    		}
+	    	}
+	    	return $nilai;
+	    }
 	    private function cekrange($value,$stat)
 	    {
 	    	$count = 0;
@@ -249,13 +268,13 @@
 	    {
 	    	$rang = array("nb","nm","ns","ze","ps","pm","pb");
 	    	$nilairang = array(-10, -6, -2, 0, 2, 6, 10);
-	    	$a = array("nb", "nb", "nb", "nb", "nm", "ns", "ze");
-	    	$b = array("nb", "nb", "nm", "nm", "ns", "ze", "ps");
-	    	$c = array("nb", "nm", "ns", "ns", "ze", "ps", "pm");
-	    	$d = array("nb", "nm", "ns", "ze", "ps", "pm", "pb");
-	    	$e = array("nm", "ns", "ze", "ps", "ps", "pb", "pb");
-	    	$f = array("ns", "ze", "ps", "pm", "pb", "pb", "pb");
-	    	$g = array("ze", "ps", "pm", "pb", "pb", "pb", "pb");
+	    	$a = array("nb", "nm", "nm", "ns", "nm", "ns", "ze");
+	    	$b = array("nm", "nm", "ns", "ns", "ns", "ze", "ps");
+	    	$c = array("nm", "ns", "ns", "ns", "ze", "ps", "pm");
+	    	$d = array("ns", "ns", "ns", "ze", "ps", "ps", "ps");
+	    	$e = array("nm", "ns", "ze", "ps", "ps", "ps", "pm");
+	    	$f = array("ns", "ze", "ps", "ps", "ps", "pm", "pm");
+	    	$g = array("ze", "ps", "pm", "ps", "pm", "pm", "pb");
 	    	$namarange = array($a, $b, $c, $d, $e, $f, $g);
 	    	$ang1 = 0;
 	    	$ang2 = 0;

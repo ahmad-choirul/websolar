@@ -47,7 +47,7 @@ var chart = new CanvasJS.Chart("chartContainer", {
 		title: "chart updates tiap " + updateInterval / 1000 + " detik"
 	},
 	axisY:{
-		suffix: " derajat",
+		suffix: " ",
 		includeZero: false
 	}, 
 	toolTip: {
@@ -64,19 +64,19 @@ var chart = new CanvasJS.Chart("chartContainer", {
 		type: "spline",
 		name: "Error Vertikal",
 		xValueType: "dateTime",
-		yValueFormatString: "#,### derajat",
+		yValueFormatString: "#,### ",
 		xValueFormatString: "hh:mm:ss TT",
 		showInLegend: true,
-		legendText: "{name} " + yValue1 + " derajat",
+		legendText: "{name} " + yValue1 + " ",
 		dataPoints: dataPoints1
 	},
 	{
 		type: "spline",
 		name: "Error Horizontal" ,
 		xValueType: "dateTime",
-		yValueFormatString: "#,### derajat",
+		yValueFormatString: "#,### ",
 		showInLegend: true,
-		legendText: "{name} " + yValue2 + " derajat",
+		legendText: "{name} " + yValue2 + " ",
 		dataPoints: dataPoints2
 	}]
 });
@@ -140,8 +140,8 @@ function updateChart() {
 		dataPoints2.shift();
 	} 
 	// updating legend text with  updated with y Value 
-	chart.options.data[0].legendText = " Error Vertikal " + yValue1 + " derajat";
-	chart.options.data[1].legendText = " Error Horizontal " + yValue2+ " derajat"; 
+	chart.options.data[0].legendText = " Error Vertikal " + yValue1 + " ";
+	chart.options.data[1].legendText = " Error Horizontal " + yValue2+ " "; 
 	chart.render();
 }
 

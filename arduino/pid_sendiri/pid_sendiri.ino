@@ -36,7 +36,6 @@ int elevasiLimitLow = 125;
 int tol = 0;
 int hasil1;
 int hasil2;
-String datasetpoint;
 void (*resetFunc)(void) = 0;
 
 void setup()
@@ -47,7 +46,7 @@ void setup()
     vertical.write(elevasi);
     Serial.begin(115200);
     serialwifi.begin(115200);
-    //  Serial.println(hasil);
+    Serial.println(hasil);
     Wire.begin();
     while (!mpu.begin(MPU6050_SCALE_2000DPS, MPU6050_RANGE_2G)) {
         Serial.println("Could not find a valid MPU6050 sensor, check wiring!");
@@ -56,50 +55,30 @@ void setup()
     // Calibrate gyroscope. The calibration must be at rest.
     // If you don't want calibrate, comment this line.
     mpu.calibrateGyro();
-    delay(2000);
+    delay(3000);
 }
 
-String getValue(String data,char separator,int index){
+String getValue(String data, char separator, int index)
+{
   int found = 0;
-  int strIndex[] ={0,0};
+  int strIndex[] = {0, -1};
   int maxIndex = data.length()-1;
-  for (int i=0; i<=maxIndex && found<=index;i++){
+
+  for(int i=0; i<=maxIndex && found<=index; i++){
     if(data.charAt(i)==separator || i==maxIndex){
-    found++;
-    strIndex[0] = strIndex[1]+1;
-    strIndex[1] = (i == maxIndex) ? i+1 :1;
+        found++;
+        strIndex[0] = strIndex[1]+1;
+        strIndex[1] = (i == maxIndex) ? i+1 : i;
     }
   }
-  String ketemu = found>index ? data.substring (strIndex[0],strIndex[1]) : "";
-  return ketemu;
- }
+
+  return found>index ? data.substring(strIndex[0], strIndex[1]) : "";
+}
 void loop()
 {
-    if (serialwifi.available()) {
-    String a = serialwifi.readString();
-    Serial.println(a);
-setpointsudut_elevasi = getValue(a,'.',0).toInt();
-setpointsudut_azimuth = getValue(a,'.',1).toInt();
-    Serial.print("setpint sudut_elevasi = ");
-Serial.println(setpointsudut_elevasi);
-    Serial.print("setpint sudut_azimuth = ");
-Serial.println(setpointsudut_azimuth);
-  }
-//StaticJsonBuffer<1000> jsonBuffer;
-//JsonObject& root = jsonBuffer.parseObject(serialwifi);
-//if (root == JsonObject::invalid())
-//return;
-//Serial.println((const char*)root["sudut_elevasi"]);
-//Serial.println((const char*)root["sudut_azimuth"]);
-//Serial.println((const char*)root["elevasi"]);
-//Serial.println((const char*)root["azimuth"]);
-//  datasetpoint = serialwifi.readString();
-//  Serial.println(datasetpoint);
     timer = millis();
-    // Read normalized values
     Vector norm = mpu.readNormalizeGyro();
-
-    // Calculate sudut_elevasi, sudut_azimuth and sudut_azimuth
+    // hitung sudut_elevasi, sudut_azimuth
     sudut_elevasi = sudut_elevasi + norm.YAxis * timeStep;
     sudut_azimuth = sudut_azimuth + norm.XAxis * timeStep;
     yaw = yaw + norm.ZAxis * timeStep;
@@ -108,8 +87,6 @@ Serial.println(setpointsudut_azimuth);
     Serial.print(sudut_elevasi);
     Serial.print(" sudut_azimuth = ");
     Serial.print(sudut_azimuth);
-//    Serial.print(" yaw = ");
-//    Serial.print(yaw);
     // Wait to full timeStep period
     delay((timeStep * 1000) - (millis() - timer));
     if (sudut_elevasi < setpointsudut_elevasi - tol || sudut_elevasi > setpointsudut_elevasi + tol) { // selisih rata2 atas dgn toleransi
@@ -161,6 +138,6 @@ int hitungpid(int feedback, int errorsebelum, int setpoint)
     double outPID = outP + outI + outD;
     double presentase = (outPID / 729) * 100;
     Serial.print((String) " presentase = " + presentase);
-    int outnya = presentase / 2;
+    int outnya = presentase;
     return outnya;
 }

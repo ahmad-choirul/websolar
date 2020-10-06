@@ -6,7 +6,7 @@ class Chitungpid extends CI_Controller {
 	private $Ti = 0.3;
 	private $Td = 1;
 	private $hasiloutput="";
-	private	$setpoint = 90;
+	private	$setpoint = 70.07;
 
 	public function __construct()
 	{
@@ -36,7 +36,7 @@ class Chitungpid extends CI_Controller {
 		$this->Mhitungmanual->hapusdatapid($id);
 		redirect('Chitungpid','refresh');
 	}
-	private function hitungpid($feedback,$errorsebelum)
+	public function hitungpid($feedback,$errorsebelum)
 	{
 		$error = $this->setpoint-$feedback;
 		$this->hasiloutput.=("ts = ". $this->ts);

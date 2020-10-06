@@ -40,9 +40,10 @@
                       <td><?php echo $no++; ?></td>
                       <td><?php echo $data->waktu; ?></td>
                       <td><?php echo $data->elevasi; ?></td>
-                      <td><?php echo $data->sudut_elevasi; ?></td>
-                      <td><?php echo $data->azimuth; ?></td>
                       <td><?php echo $data->sudut_azimuth; ?></td>
+                      <td><?php echo $data->azimuth; ?></td>
+                      <td><?php echo $data->sudut_elevasi; ?></td>
+
                     </tr>
 
                   <?php endforeach ?>

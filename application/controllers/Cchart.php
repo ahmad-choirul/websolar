@@ -28,9 +28,9 @@ class Cchart extends CI_Controller {
 	}
 	
 	public function datarealtime(){
-		// $data['arraylog'] = $this->Mapi->getdatalog();
+			$data['arraysensor'] = $this->Mapi->getdatasensor();
 		$data['judul']= "Beranda";
-		$this->tampil('dashboard',$data);
+		$this->tampil('chart_sensor',$data);
 	}	
 	public function lihatsudutaktuator(){
 		$data['judul']= "Chart aktuator";
@@ -44,7 +44,7 @@ class Cchart extends CI_Controller {
 	}
 	public function lihatsensor(){
 		$data['judul']= "grafik Sensor";
-		$data['arraylog'] = $this->Mapi->getdatasensor();
+			$data['arraysensor'] = $this->Mapi->getdatasensor();
 		$this->tampil('chart_sensor',$data);
 	}
 	public function ambildatatracker(){	
@@ -53,7 +53,7 @@ class Cchart extends CI_Controller {
 		return $angka;
 	}
 	public function ambildatasensor(){	
-		$datarealtime=$this->Mapi->getdatarealtimesensor();
+		$datarealtime=$this->Mapi->getdatarealtimesensorjson();
 		echo $datarealtime;
 		return $datarealtime;
 	}

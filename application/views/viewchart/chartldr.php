@@ -84,7 +84,7 @@ var dataPoints4 = [];
         title: "chart updates every " + updateInterval / 1000 + " secs"
       },
       axisY:{
-        suffix: " derajat",
+        suffix: " ",
         includeZero: false
       }, 
       toolTip: {
@@ -101,39 +101,39 @@ var dataPoints4 = [];
         type: "spline",
         name: "Rata-rata Atas",
         xValueType: "dateTime",
-        yValueFormatString: "#,### derajat",
+        yValueFormatString: "#,### ",
         xValueFormatString: "hh:mm:ss TT",
         showInLegend: true,
-        legendText: "{name} " + yValue1 + " derajat",
+        legendText: "{name} " + yValue1 + " ",
         dataPoints: dataPoints1
       },
       { 
         type: "spline",
         name: "Rata-rata Bawah",
         xValueType: "dateTime",
-        yValueFormatString: "#,### derajat",
+        yValueFormatString: "#,### ",
         xValueFormatString: "hh:mm:ss TT",
         showInLegend: true,
-        legendText: "{name} " + yValue2 + " derajat",
+        legendText: "{name} " + yValue2 + " ",
         dataPoints: dataPoints2
       },
       { 
         type: "spline",
         name: "Rata-rata Kanan",
         xValueType: "dateTime",
-        yValueFormatString: "#,### derajat",
+        yValueFormatString: "#,### ",
         xValueFormatString: "hh:mm:ss TT",
         showInLegend: true,
-        legendText: "{name} " + yValue3 + " derajat",
+        legendText: "{name} " + yValue3 + " ",
         dataPoints: dataPoints3
       },
       {       
         type: "spline",
         name: "Rata-rata Kiri" ,
         xValueType: "dateTime",
-        yValueFormatString: "#,### derajat",
+        yValueFormatString: "#,### ",
         showInLegend: true,
-        legendText: "{name} " + yValue4 + " derajat",
+        legendText: "{name} " + yValue4 + " ",
         dataPoints: dataPoints4
       }]
     });
@@ -206,10 +206,10 @@ function updateChart() {
     dataPoints1.shift();
   } 
   // updating legend text with  updated with y Value 
-  chart.options.data[0].legendText = " Rata-rata Atas " + yValue1 + " derajat";
-  chart.options.data[1].legendText = " Rata-rata Bawah " + yValue2+ " derajat"; 
-  chart.options.data[2].legendText = " Rata-rata Kanan " + yValue3 + " derajat";
-  chart.options.data[3].legendText = " Rata-rata Kiri " + yValue4+ " derajat"; 
+  chart.options.data[0].legendText = " Rata-rata Atas " + yValue1 + " ";
+  chart.options.data[1].legendText = " Rata-rata Bawah " + yValue2+ " "; 
+  chart.options.data[2].legendText = " Rata-rata Kanan " + yValue3 + " ";
+  chart.options.data[3].legendText = " Rata-rata Kiri " + yValue4+ " "; 
   chart.render();
 }
 
